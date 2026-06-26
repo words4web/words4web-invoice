@@ -10,11 +10,11 @@ export default function Home() {
     <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-10">
       <Image
         src="/logo.png"
-        alt="Live Constructions Ltd"
+        alt="Words4Web"
         width={0}
         height={0}
         sizes="100vw"
-        style={{ width: "450px", height: "auto" }}
+        style={{ width: "320px", height: "auto" }}
         priority
       />
 
@@ -22,7 +22,7 @@ export default function Home() {
         <button
           id="btn-generate-invoice"
           onClick={() => router.push("/invoice")}
-          className="px-8 py-3 bg-[#0052cc] hover:bg-[#0747a6] text-white font-bold rounded-lg text-sm tracking-wide transition-colors shadow">
+          className="px-8 py-3 bg-[#7A0000] hover:bg-[#5c0000] text-white font-bold rounded-lg text-sm tracking-wide transition-colors shadow">
           Generate Invoice
         </button>
         <button

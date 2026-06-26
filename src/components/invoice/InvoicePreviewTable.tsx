@@ -1,129 +1,202 @@
 import { InvoicePreviewTableProps } from "@/types/invoice";
-import { calcInvoiceTotals } from "@/utils/invoice";
 
 export function InvoicePreviewTable({ items }: InvoicePreviewTableProps) {
-  const totals = calcInvoiceTotals(items);
+  const filteredItems =
+    items?.filter((i) => i.description || i.qty || i.rate) || [];
+
+  const formatVal = (val: number) =>
+    val % 1 === 0
+      ? val.toLocaleString("en-IN", { maximumFractionDigits: 0 })
+      : val.toLocaleString("en-IN", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
 
   return (
-    <>
-      {/* ITEMS TABLE */}
-      <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          fontSize: "9.5pt",
-        }}>
-        <thead>
-          <tr>
-            <th
-              style={{
-                border: "1px solid #000",
-                padding: "7px 10px",
-                textAlign: "center",
-              }}>
-              DESCRIPTION
-            </th>
-            <th
-              style={{
-                border: "1px solid #000",
-                padding: "7px 10px",
-                width: "110px",
-                textAlign: "center",
-              }}>
-              AMOUNT
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {items?.map((item, idx) => (
-            <tr key={idx} style={{ minHeight: "24px" }}>
+    <table
+      style={{
+        width: "100%",
+        borderCollapse: "collapse",
+        fontSize: "9pt",
+        marginBottom: "40px",
+      }}>
+      <thead>
+        <tr style={{ background: "#7A0000" }}>
+          <th
+            style={{
+              border: "1px solid #000",
+              padding: "6px 6px",
+              textAlign: "left",
+              fontWeight: "bold",
+              color: "#fff",
+            }}>
+            ITEMS
+          </th>
+          <th
+            style={{
+              border: "1px solid #000",
+              padding: "6px 4px",
+              textAlign: "center",
+              fontWeight: "bold",
+              color: "#fff",
+              width: "55px",
+            }}>
+            GST
+          </th>
+          <th
+            style={{
+              border: "1px solid #000",
+              padding: "6px 4px",
+              textAlign: "center",
+              fontWeight: "bold",
+              color: "#fff",
+              width: "35px",
+            }}>
+            QTY
+          </th>
+          <th
+            style={{
+              border: "1px solid #000",
+              padding: "6px 6px",
+              textAlign: "right",
+              fontWeight: "bold",
+              color: "#fff",
+              width: "80px",
+            }}>
+            RATE
+          </th>
+          <th
+            style={{
+              border: "1px solid #000",
+              padding: "6px 6px",
+              textAlign: "right",
+              fontWeight: "bold",
+              color: "#fff",
+              width: "80px",
+            }}>
+            AMOUNT
+          </th>
+          <th
+            style={{
+              border: "1px solid #000",
+              padding: "6px 6px",
+              textAlign: "right",
+              fontWeight: "bold",
+              color: "#fff",
+              width: "80px",
+            }}>
+            IGST
+          </th>
+          <th
+            style={{
+              border: "1px solid #000",
+              padding: "6px 6px",
+              textAlign: "right",
+              fontWeight: "bold",
+              color: "#fff",
+              width: "90px",
+            }}>
+            TOTAL
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredItems.map((item, idx) => {
+          const qty = parseFloat(item.qty) || 0;
+          const rate = parseFloat(item.rate) || 0;
+          const gstRate = parseFloat(item.gstRate) || 0;
+          const amount = qty * rate;
+          const igst = amount * (gstRate / 100);
+          const total = amount + igst;
+
+          return (
+            <tr key={idx}>
               <td
                 style={{
                   border: "1px solid #000",
-                  padding: "6px 10px",
-                  verticalAlign: "top",
+                  padding: "6px 6px",
+                  verticalAlign: "middle",
                   whiteSpace: "pre-wrap",
+                  textAlign: "left",
+                  color: "#111",
+                  fontWeight: "normal",
                 }}>
-                {item?.description}
+                {item.description}
               </td>
               <td
                 style={{
                   border: "1px solid #000",
-                  padding: "6px 10px",
-                  textAlign: "right",
-                  width: "110px",
-                  whiteSpace: "nowrap",
+                  padding: "6px 4px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  color: "#111",
+                  fontWeight: "normal",
                 }}>
-                {item?.amount
-                  ? `£${parseFloat(item?.amount?.replace(/[^0-9.]/g, "") || "0")?.toLocaleString("en-GB", { minimumFractionDigits: 2 })}`
-                  : ""}
+                {item.gstRate}%
+              </td>
+              <td
+                style={{
+                  border: "1px solid #000",
+                  padding: "6px 4px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  color: "#111",
+                  fontWeight: "normal",
+                }}>
+                {item.qty}
+              </td>
+              <td
+                style={{
+                  border: "1px solid #000",
+                  padding: "6px 6px",
+                  textAlign: "right",
+                  verticalAlign: "middle",
+                  whiteSpace: "nowrap",
+                  color: "#111",
+                  fontWeight: "normal",
+                }}>
+                ₹{formatVal(rate)}
+              </td>
+              <td
+                style={{
+                  border: "1px solid #000",
+                  padding: "6px 6px",
+                  textAlign: "right",
+                  verticalAlign: "middle",
+                  whiteSpace: "nowrap",
+                  color: "#111",
+                  fontWeight: "normal",
+                }}>
+                ₹{formatVal(amount)}
+              </td>
+              <td
+                style={{
+                  border: "1px solid #000",
+                  padding: "6px 6px",
+                  textAlign: "right",
+                  verticalAlign: "middle",
+                  whiteSpace: "nowrap",
+                  color: "#111",
+                  fontWeight: "normal",
+                }}>
+                ₹{formatVal(igst)}
+              </td>
+              <td
+                style={{
+                  border: "1px solid #000",
+                  padding: "6px 6px",
+                  textAlign: "right",
+                  verticalAlign: "middle",
+                  whiteSpace: "nowrap",
+                  color: "#111",
+                  fontWeight: "normal",
+                }}>
+                ₹{formatVal(total)}
               </td>
             </tr>
-          ))}
-          {Array.from({ length: Math.max(0, 8 - items?.length) })?.map(
-            (_, i) => (
-              <tr key={`blank-${i}`} style={{ height: "26px" }}>
-                <td style={{ border: "1px solid #000" }}></td>
-                <td style={{ border: "1px solid #000" }}></td>
-              </tr>
-            ),
-          )}
-          <tr>
-            <td
-              style={{
-                border: "1px solid #000",
-                padding: "6px 10px",
-                textAlign: "right",
-                fontSize: "9pt",
-              }}>
-              VAT @ 20%
-            </td>
-            <td
-              style={{
-                border: "1px solid #000",
-                padding: "6px 10px",
-                textAlign: "right",
-                width: "110px",
-              }}>
-              {totals?.fmtVat}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      {/* AMOUNT PAYABLE */}
-      <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          fontSize: "9.5pt",
-        }}>
-        <tbody>
-          <tr>
-            <td
-              style={{
-                border: "1px solid #000",
-                borderTop: "none",
-                padding: "7px 10px",
-                fontWeight: "bold",
-                textAlign: "right",
-              }}>
-              AMOUNT PAYABLE
-            </td>
-            <td
-              style={{
-                border: "2px solid #000",
-                borderTop: "none",
-                padding: "7px 10px",
-                textAlign: "right",
-                width: "110px",
-                fontWeight: "bold",
-              }}>
-              {totals?.fmtTotal}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </>
+          );
+        })}
+      </tbody>
+    </table>
   );
 }

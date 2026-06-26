@@ -1,10 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Open+Sans:wght@300;400;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #111827;
-  --primary: #0052cc;
-  --primary-hover: #0747a6;
+  --primary: #7a0000;
+  --primary-hover: #5c0000;
 }
 
 @theme inline {
@@ -33,14 +34,14 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 82, 204, 0.35); /* Soft primary blue */
+  background: rgba(122, 0, 0, 0.35); /* Soft primary burgundy */
   border-radius: 9999px;
   border: 1px solid transparent;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 82, 204, 0.75); /* Darker primary blue on hover */
+  background: rgba(122, 0, 0, 0.75); /* Darker primary burgundy on hover */
   border: 1px solid transparent;
   background-clip: padding-box;
 }
@@ -48,5 +49,5 @@ body {
 /* Firefox scrollbar compatibility */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 82, 204, 0.35) transparent;
+  scrollbar-color: rgba(122, 0, 0, 0.35) transparent;
 }

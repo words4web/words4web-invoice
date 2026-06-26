@@ -1,26 +1,35 @@
 export interface QuotationLineItem {
-  title: string;
   description: string;
-  amount: string;
-}
-
-export interface PaymentTerm {
-  description: string;
-  percentage: string;
+  gstRate: string; // e.g. "0" or "18"
+  qty: string;
+  rate: string;
 }
 
 export interface QuotationData {
   quotationNo: string;
   date: string;
+  validTillDate: string;
   clientAddress: string;
-  forProject: string;
+  countryOfSupply: string;
   items: QuotationLineItem[];
-  totalLabel: string; // e.g. "Side Double Story Extension"
+
+  // Bank details
+  bank: string;
+  accountName: string;
+  accountNo: string;
+  ifsc: string;
+  accountType: string;
+  upiId: string;
+  qrCode?: string;
+
+  // Terms & Conditions / Additional Notes
+  additionalNotes: string;
+
+  // Owner details (editable)
   ownerAddress?: string;
   ownerPhone?: string;
   ownerEmail?: string;
   ownerWebsite?: string;
-  paymentTerms?: PaymentTerm[];
 }
 
 export interface QuotationPreviewProps {
@@ -29,8 +38,4 @@ export interface QuotationPreviewProps {
 
 export interface QuotationPreviewTableProps {
   items: QuotationLineItem[];
-  totalLabel: string;
-  totals: {
-    total: number;
-  };
 }

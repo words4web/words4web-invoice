@@ -1,11 +1,5 @@
 import { InvoicePreviewProps } from "@/types/invoice";
 import { COMPANY } from "@/data/company";
-import {
-  PinIcon,
-  PhoneIcon,
-  EmailIcon,
-  WebsiteIcon,
-} from "@/components/CompanyIcons";
 
 export function InvoicePreviewHeader({ data }: InvoicePreviewProps) {
   return (
@@ -14,150 +8,105 @@ export function InvoicePreviewHeader({ data }: InvoicePreviewProps) {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "flex-start",
-        marginBottom: "24px",
+        marginBottom: "10px",
       }}>
-      <div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logo.png"
-          alt="Live Constructions Ltd"
-          style={{ width: "220px", height: "auto" }}
-        />
+      <div style={{ textAlign: "left" }}>
         <div
           style={{
-            marginTop: "10px",
-            fontSize: "8.5pt",
-            lineHeight: "1.65",
-            color: "#000",
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-          }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              gap: "10px",
-            }}>
-            <div style={{ flexShrink: 0, marginTop: "3px" }}>
-              <PinIcon />
-            </div>
-            <div
-              style={{
-                fontWeight: "bold",
-                color: "#000",
-                lineHeight: "1.45",
-                whiteSpace: "pre-wrap",
-              }}>
-              {data?.ownerAddress || COMPANY.address}
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              gap: "10px",
-            }}>
-            <div style={{ flexShrink: 0, marginTop: "3px" }}>
-              <PhoneIcon />
-            </div>
-            <div
-              style={{
-                fontWeight: "bold",
-                color: "#000",
-                lineHeight: "1.45",
-                whiteSpace: "pre-wrap",
-              }}>
-              {(data?.ownerPhone || COMPANY.phones.join(" / "))
-                .split(/\s*[\/\n]\s*/)
-                .filter(Boolean)
-                .join("\n")}
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}>
-            <div style={{ flexShrink: 0 }}>
-              <EmailIcon />
-            </div>
-            <div
-              style={{
-                fontWeight: "bold",
-                color: "#000",
-                lineHeight: "1.45",
-              }}>
-              {data?.ownerEmail || COMPANY.email}
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}>
-            <div style={{ flexShrink: 0 }}>
-              <WebsiteIcon />
-            </div>
-            <div
-              style={{
-                fontWeight: "bold",
-                color: "#000",
-                lineHeight: "1.45",
-              }}>
-              {data?.ownerWebsite || COMPANY.website}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style={{ textAlign: "right", minWidth: "240px" }}>
-        <div
-          style={{
-            background: "#1a56a0",
-            height: "28px",
-            clipPath: "polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%)",
-            marginBottom: "8px",
-          }}
-        />
-        <div
-          style={{
+            fontFamily: "'Montserrat', sans-serif",
             fontSize: "24pt",
-            fontWeight: 900,
-            color: "#4a4a4a",
-            marginBottom: "10px",
+            fontWeight: 700,
+            color: "#7A0000",
+            marginBottom: "0px",
+            letterSpacing: "0.5px",
+            textTransform: "uppercase",
           }}>
           INVOICE
         </div>
         <table
           style={{
-            marginLeft: "auto",
-            fontSize: "9pt",
+            fontSize: "9.5pt",
             borderCollapse: "collapse",
           }}>
           <tbody>
             <tr>
               <td
                 style={{
-                  fontWeight: "bold",
-                  paddingRight: "10px",
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 600,
+                  padding: "0 0",
+                  lineHeight: "1.5",
                   textAlign: "left",
+                  color: "#555",
+                  width: "100px",
                 }}>
-                INVOICE NO.
+                Invoice No
               </td>
-              <td>{data?.invoiceNo || "—"}</td>
+              <td
+                style={{
+                  fontFamily: "monospace",
+                  fontWeight: 300,
+                  padding: "1px 6px",
+                  width: "140px",
+                  color: "#000",
+                }}>
+                {data?.invoiceNo || "—"}
+              </td>
             </tr>
             <tr>
-              <td style={{ fontWeight: "bold", textAlign: "left" }}>DATE:</td>
-              <td>{data?.date || "—"}</td>
+              <td
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 600,
+                  padding: "0 0",
+                  lineHeight: "1.5",
+                  textAlign: "left",
+                  color: "#555",
+                }}>
+                Invoice Date
+              </td>
+              <td
+                style={{
+                  fontFamily: "monospace",
+                  fontWeight: 300,
+                  padding: "1px 6px",
+                  color: "#000",
+                }}>
+                {data?.date || "—"}
+              </td>
             </tr>
             <tr>
-              <td style={{ fontWeight: "bold", textAlign: "left" }}>UTR NO.</td>
-              <td>{data?.utrNo || "—"}</td>
+              <td
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 600,
+                  padding: "0 0",
+                  lineHeight: "1.5",
+                  textAlign: "left",
+                  color: "#555",
+                }}>
+                Due Date
+              </td>
+              <td
+                style={{
+                  fontFamily: "monospace",
+                  fontWeight: 300,
+                  padding: "1px 6px",
+                  color: "#000",
+                }}>
+                {data?.dueDate || "—"}
+              </td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo.png"
+          alt={COMPANY.name}
+          style={{ height: "120px", width: "auto", display: "block" }}
+        />
       </div>
     </div>
   );

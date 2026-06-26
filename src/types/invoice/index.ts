@@ -1,19 +1,31 @@
 export interface InvoiceLineItem {
   description: string;
-  amount: string;
+  gstRate: string; // e.g. "0" or "18"
+  qty: string;
+  rate: string;
 }
 
 export interface InvoiceData {
   invoiceNo: string;
   date: string;
-  utrNo: string;
+  dueDate: string;
   clientAddress: string;
-  forProject: string;
+  countryOfSupply: string;
   items: InvoiceLineItem[];
-  vatNo: string;
+
+  // Bank details
   bank: string;
+  accountName: string;
   accountNo: string;
-  sortCode: string;
+  ifsc: string;
+  accountType: string;
+  upiId: string;
+  qrCode?: string;
+
+  // Terms & Conditions
+  termsAndConditions: string;
+
+  // Owner details (editable)
   ownerAddress?: string;
   ownerPhone?: string;
   ownerEmail?: string;

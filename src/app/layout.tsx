@@ -13,10 +13,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Live Constructions Ltd | Your Dreams, Our Aims",
-  description:
-    "Professional construction services in Kent and the UK, specializing in single & double storey extensions.",
+  title: "Words4Web | Invoice and Quotation Generator",
+  description: "Professional digital marketing and website creation services.",
 };
+
 
 export default function RootLayout({
   children,

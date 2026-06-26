@@ -11,39 +11,47 @@ export function QuotationItemRowForm({
   return (
     <div className="border border-gray-100 rounded-lg p-3 space-y-2 bg-gray-50">
       <div className="flex items-center justify-between mb-1">
-        <span className="text-xs font-bold text-gray-400">
-          {idx + 1}. {item?.title || "New Item"}
+        <span className="text-xs font-semibold text-gray-400">
+          Item {idx + 1}
         </span>
         {showRemove && (
           <button
             onClick={() => onRemove(idx)}
-            className="text-xs text-red-400 hover:text-red-650 cursor-pointer">
+            className="text-xs text-red-500 hover:text-red-750 cursor-pointer font-medium">
             Remove
           </button>
         )}
       </div>
-      <FormInput
-        label="Title"
-        placeholder="Title (e.g. Drainage)"
-        value={item?.title}
-        onChange={(val) => onChangeField(idx, "title", val)}
-      />
       <FormTextarea
-        label="Description"
-        rows={3}
-        placeholder="Detailed description of the work..."
+        label="Description / Items"
+        rows={2}
+        placeholder="Website Creation"
         value={item?.description}
         onChange={(val) => onChangeField(idx, "description", val)}
       />
-      <FormInput
-        label="Amount"
-        type="number"
-        step="0.01"
-        min="0"
-        placeholder="Amount (e.g. 5000 — leave blank if not priced)"
-        value={item?.amount}
-        onChange={(val) => onChangeField(idx, "amount", val)}
-      />
+      <div className="grid grid-cols-3 gap-2">
+        <FormInput
+          label="GST Rate (%)"
+          type="number"
+          placeholder="0"
+          value={item?.gstRate}
+          onChange={(val) => onChangeField(idx, "gstRate", val)}
+        />
+        <FormInput
+          label="Qty"
+          type="number"
+          placeholder="1"
+          value={item?.qty}
+          onChange={(val) => onChangeField(idx, "qty", val)}
+        />
+        <FormInput
+          label="Rate (₹)"
+          type="number"
+          placeholder="0"
+          value={item?.rate}
+          onChange={(val) => onChangeField(idx, "rate", val)}
+        />
+      </div>
     </div>
   );
 }

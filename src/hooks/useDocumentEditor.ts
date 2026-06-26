@@ -1,13 +1,32 @@
 import { useState, useCallback } from "react";
 import { getLogoBase64 } from "@/lib/logo";
 import { printHtml } from "@/lib/print";
+import { getTodayStr } from "@/utils/date";
 
 export function useDocumentEditor<TData extends { items: TItem[] }, TItem>(
   initialData: TData,
   createEmptyItem: () => TItem,
   buildHtml: (data: TData, logoBase64: string) => string,
 ) {
-  const [data, setData] = useState<TData>(initialData);
+  const [data, setData] = useState<TData>(() => {
+    const today = getTodayStr();
+    const nextData = { ...initialData };
+
+    if ("date" in nextData && typeof nextData.date === "string") {
+      nextData.date = today;
+    }
+    if ("dueDate" in nextData && typeof nextData.dueDate === "string") {
+      nextData.dueDate = today;
+    }
+    if (
+      "validTillDate" in nextData &&
+      typeof nextData.validTillDate === "string"
+    ) {
+      nextData.validTillDate = today;
+    }
+
+    return nextData;
+  });
   const [printing, setPrinting] = useState(false);
 
   const setField = useCallback(

@@ -17,27 +17,27 @@ export function OwnerDetailsForm({
         <FormTextarea
           label="Company Address"
           rows={3}
-          placeholder="106 Valley Drive Gravesend, Kent&#10;DA12 5RX"
+          placeholder="5037, SSRF, Lavate Nagar,&#10;Nashik, Maharashtra - 422002"
           value={ownerAddress}
           onChange={(val) => onChangeField("ownerAddress", val)}
         />
         <FormInput
           label="Phone Number(s)"
-          placeholder="07875592595 / 07957200577 / 01474520536"
+          placeholder="+91 70202 07611"
           value={ownerPhone}
           onChange={(val) => onChangeField("ownerPhone", val)}
         />
         <FormInput
           label="Email Address"
           type="email"
-          placeholder="liveconstructionsltd@gmail.com"
+          placeholder="deepali@words4web.com"
           value={ownerEmail}
           onChange={(val) => onChangeField("ownerEmail", val)}
         />
         <FormInput
           label="Website"
           type="url"
-          placeholder="https://liveconstructionsltd.co.uk"
+          placeholder="https://words4web.com"
           value={ownerWebsite}
           onChange={(val) => onChangeField("ownerWebsite", val)}
         />

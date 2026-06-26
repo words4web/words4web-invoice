@@ -1,11 +1,5 @@
 import { QuotationPreviewProps } from "@/types/quotation";
 import { COMPANY } from "@/data/company";
-import {
-  PinIcon,
-  PhoneIcon,
-  EmailIcon,
-  WebsiteIcon,
-} from "@/components/CompanyIcons";
 
 export function QuotationPreviewHeader({ data }: QuotationPreviewProps) {
   return (
@@ -14,146 +8,105 @@ export function QuotationPreviewHeader({ data }: QuotationPreviewProps) {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "flex-start",
-        marginBottom: "24px",
+        marginBottom: "10px",
       }}>
-      <div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logo.png"
-          alt="Live Constructions Ltd"
-          style={{ width: "220px", height: "auto" }}
-        />
+      <div style={{ textAlign: "left" }}>
         <div
           style={{
-            marginTop: "10px",
-            fontSize: "8.5pt",
-            lineHeight: "1.65",
-            color: "#000",
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-          }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              gap: "10px",
-            }}>
-            <div style={{ flexShrink: 0, marginTop: "3px" }}>
-              <PinIcon />
-            </div>
-            <div
-              style={{
-                fontWeight: "bold",
-                color: "#000",
-                lineHeight: "1.45",
-                whiteSpace: "pre-wrap",
-              }}>
-              {data?.ownerAddress || COMPANY.address}
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              gap: "10px",
-            }}>
-            <div style={{ flexShrink: 0, marginTop: "3px" }}>
-              <PhoneIcon />
-            </div>
-            <div
-              style={{
-                fontWeight: "bold",
-                color: "#000",
-                lineHeight: "1.45",
-                whiteSpace: "pre-wrap",
-              }}>
-              {(data?.ownerPhone || COMPANY.phones.join(" / "))
-                .split(/\s*[\/\n]\s*/)
-                .filter(Boolean)
-                .join("\n")}
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}>
-            <div style={{ flexShrink: 0 }}>
-              <EmailIcon />
-            </div>
-            <div
-              style={{
-                fontWeight: "bold",
-                color: "#000",
-                lineHeight: "1.45",
-              }}>
-              {data?.ownerEmail || COMPANY.email}
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}>
-            <div style={{ flexShrink: 0 }}>
-              <WebsiteIcon />
-            </div>
-            <div
-              style={{
-                fontWeight: "bold",
-                color: "#000",
-                lineHeight: "1.45",
-              }}>
-              {data?.ownerWebsite || COMPANY.website}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style={{ textAlign: "right", minWidth: "240px" }}>
-        <div
-          style={{
-            background: "#1a56a0",
-            height: "28px",
-            clipPath: "polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%)",
-            marginBottom: "8px",
-          }}
-        />
-        <div
-          style={{
+            fontFamily: "'Montserrat', sans-serif",
             fontSize: "24pt",
-            fontWeight: 900,
-            color: "#4a4a4a",
-            marginBottom: "10px",
+            fontWeight: 700,
+            color: "#8C52FF",
+            marginBottom: "0px",
+            letterSpacing: "0.5px",
+            textTransform: "uppercase",
           }}>
           QUOTATION
         </div>
         <table
           style={{
-            marginLeft: "auto",
-            fontSize: "9pt",
+            fontSize: "9.5pt",
             borderCollapse: "collapse",
           }}>
           <tbody>
             <tr>
               <td
                 style={{
-                  fontWeight: "bold",
-                  paddingRight: "10px",
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 600,
+                  padding: "0 0",
+                  lineHeight: "1.5",
                   textAlign: "left",
+                  color: "#555",
+                  width: "110px",
                 }}>
-                QUOTATION NO.
+                Quotation No
               </td>
-              <td>{data?.quotationNo || "—"}</td>
+              <td
+                style={{
+                  fontFamily: "monospace",
+                  fontWeight: 300,
+                  padding: "1px 6px",
+                  width: "140px",
+                  color: "#000",
+                }}>
+                {data?.quotationNo || "—"}
+              </td>
             </tr>
             <tr>
-              <td style={{ fontWeight: "bold", textAlign: "left" }}>DATE:</td>
-              <td>{data?.date || "—"}</td>
+              <td
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 600,
+                  padding: "0 0",
+                  lineHeight: "1.5",
+                  textAlign: "left",
+                  color: "#555",
+                }}>
+                Quotation Date
+              </td>
+              <td
+                style={{
+                  fontFamily: "monospace",
+                  fontWeight: 300,
+                  padding: "1px 6px",
+                  color: "#000",
+                }}>
+                {data?.date || "—"}
+              </td>
+            </tr>
+            <tr>
+              <td
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 600,
+                  padding: "0 0",
+                  lineHeight: "1.5",
+                  textAlign: "left",
+                  color: "#555",
+                }}>
+                Valid Till Date
+              </td>
+              <td
+                style={{
+                  fontFamily: "monospace",
+                  fontWeight: 300,
+                  padding: "1px 6px",
+                  color: "#000",
+                }}>
+                {data?.validTillDate || "—"}
+              </td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo.png"
+          alt={COMPANY.name}
+          style={{ height: "120px", width: "auto", display: "block" }}
+        />
       </div>
     </div>
   );

@@ -1,50 +1,29 @@
 import { COMPANY } from "@/data/company";
-import {
-  PaymentTerm,
-  QuotationLineItem,
-  QuotationData,
-} from "@/types/quotation";
-
-export const DEFAULT_PAYMENT_TERMS: PaymentTerm[] = [
-  { description: "Initial Payment at start of the project", percentage: "20%" },
-  { description: "Second payment due at DPC Level", percentage: "20%" },
-  {
-    description: "Third payment due at ground floor wall Plate Level",
-    percentage: "15%",
-  },
-  {
-    description: "Fourth payment due at the first-floor wall plate Level",
-    percentage: "20%",
-  },
-  {
-    description: "Fourth payment at completion of the roof structure",
-    percentage: "20%",
-  },
-  {
-    description: "Final payment due at Completion of our work",
-    percentage: "5%",
-  },
-];
+import { QuotationLineItem, QuotationData } from "@/types/quotation";
+import { getTodayStr } from "@/utils/date";
 
 export const DEFAULT_ITEMS: QuotationLineItem[] = [
-  {
-    title: "Protection",
-    description:
-      "Shuttering will be done wherever required around the area of extension. Please remove all the fragile and valuable items from the area of work.",
-    amount: "",
-  },
+  { description: "Website Creation", gstRate: "0", qty: "1", rate: "45000" },
 ];
 
 export const DEFAULT_DATA: QuotationData = {
-  quotationNo: "",
-  date: "",
-  clientAddress: "",
-  forProject: "Double Storey Rear and Front Extension",
+  quotationNo: "LC-May-05",
+  date: getTodayStr(),
+  validTillDate: getTodayStr(),
+  clientAddress:
+    "Live Construction\n106 Valley Drive Gravesend,Kent DA12,SRX\nUnited Kingdom",
+  countryOfSupply: "United Kingdom",
   items: DEFAULT_ITEMS,
-  totalLabel: "Side Double Story Extension",
+  bank: COMPANY.bank,
+  accountName: COMPANY.accountName,
+  accountNo: COMPANY.accountNo,
+  ifsc: COMPANY.ifsc,
+  accountType: COMPANY.accountType,
+  upiId: COMPANY.upiId,
+  additionalNotes:
+    "If you agree with this quotation kindly send a signed acceptance on the shared attachment and the date of commencement of the services, which is from May 2026.",
   ownerAddress: COMPANY.address,
   ownerPhone: COMPANY.phones.join(" / "),
   ownerEmail: COMPANY.email,
   ownerWebsite: COMPANY.website,
-  paymentTerms: DEFAULT_PAYMENT_TERMS,
 };

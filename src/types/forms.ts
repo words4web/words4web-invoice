@@ -1,6 +1,6 @@
 import React from "react";
 import { InvoiceLineItem } from "./invoice";
-import { PaymentTerm, QuotationLineItem } from "./quotation";
+import { QuotationLineItem } from "./quotation";
 
 export type Tab = "form" | "preview";
 
@@ -10,25 +10,29 @@ export interface MobileTabBarProps {
 }
 
 export interface BankDetailsFormProps {
-  vatNo: string;
   bank: string;
+  accountName: string;
   accountNo: string;
-  sortCode: string;
+  ifsc: string;
+  accountType: string;
+  upiId: string;
+  qrCode?: string;
   onChangeField: (
-    field: "vatNo" | "bank" | "accountNo" | "sortCode",
+    field:
+      | "bank"
+      | "accountName"
+      | "accountNo"
+      | "ifsc"
+      | "accountType"
+      | "upiId"
+      | "qrCode",
     value: string,
   ) => void;
 }
 
 export interface ClientDetailsFormProps {
   clientAddress: string;
-  forProject: string;
-  projectLabel: string;
-  projectPlaceholder: string;
-  onChangeField: (field: "clientAddress" | "forProject", value: string) => void;
-  // Optional field specifically for Quotation page
-  totalLabel?: string;
-  onChangeTotalLabel?: (value: string) => void;
+  onChangeField: (field: "clientAddress", value: string) => void;
 }
 
 export interface OwnerDetailsFormProps {
@@ -71,14 +75,6 @@ export interface InvoiceItemRowFormProps {
   showRemove: boolean;
   onRemove: () => void;
   onChangeField: (field: keyof InvoiceLineItem, value: string) => void;
-}
-
-export interface PaymentTermRowFormProps {
-  idx: number;
-  term: PaymentTerm;
-  showRemove: boolean;
-  onRemove: (idx: number) => void;
-  onChangeField: (idx: number, field: keyof PaymentTerm, value: string) => void;
 }
 
 export interface QuotationItemRowFormProps {

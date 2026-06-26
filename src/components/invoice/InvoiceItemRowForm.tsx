@@ -17,27 +17,54 @@ export function InvoiceItemRowForm({
         {showRemove && (
           <button
             onClick={onRemove}
-            className="text-xs text-red-400 hover:text-red-655 cursor-pointer">
+            className="text-xs text-red-500 hover:text-red-750 cursor-pointer font-medium">
             Remove
           </button>
         )}
       </div>
       <FormTextarea
-        label="Description"
+        label="Description / Items"
         rows={2}
-        placeholder="Description"
+        placeholder="Monthly Digital Marketing Services"
         value={item?.description}
         onChange={(val) => onChangeField("description", val)}
       />
-      <FormInput
-        label="Amount"
-        type="number"
-        step="0.01"
-        min="0"
-        placeholder="Amount (e.g. 2500)"
-        value={item?.amount}
-        onChange={(val) => onChangeField("amount", val)}
-      />
+      <div className="grid grid-cols-3 gap-2">
+        <FormInput
+          label="GST Rate (%)"
+          type="number"
+          placeholder="0"
+          min={0}
+          max={100}
+          value={item?.gstRate}
+          onChange={(val) =>
+            onChangeField(
+              "gstRate",
+              String(Math.max(0, Math.min(100, Number(val)))),
+            )
+          }
+        />
+        <FormInput
+          label="Qty"
+          type="number"
+          placeholder="1"
+          min={1}
+          value={item?.qty}
+          onChange={(val) =>
+            onChangeField("qty", String(Math.max(1, Number(val))))
+          }
+        />
+        <FormInput
+          label="Rate (₹)"
+          type="number"
+          placeholder="0"
+          min={1}
+          value={item?.rate}
+          onChange={(val) =>
+            onChangeField("rate", String(Math.max(1, Number(val))))
+          }
+        />
+      </div>
     </div>
   );
 }

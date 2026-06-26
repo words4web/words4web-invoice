@@ -1,12 +1,13 @@
 "use client";
 
 import { useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { COMPANY } from "@/data/company";
 import { InvoiceData, InvoiceLineItem } from "@/types/invoice";
 import { buildInvoiceHtml } from "@/lib/invoiceBuilder";
 import { calcInvoiceTotals } from "@/utils/invoice";
 import { GeneratorHeader } from "@/components/GeneratorHeader";
-import { FormInput } from "@/components/FormFields";
+import { FormInput, FormTextarea } from "@/components/FormFields";
 import { OwnerDetailsForm } from "@/components/OwnerDetailsForm";
 import { ClientDetailsForm } from "@/components/ClientDetailsForm";
 import { BankDetailsForm } from "@/components/BankDetailsForm";
@@ -14,6 +15,7 @@ import { InvoicePreviewHeader } from "@/components/invoice/InvoicePreviewHeader"
 import { InvoicePreviewClient } from "@/components/invoice/InvoicePreviewClient";
 import { InvoicePreviewTable } from "@/components/invoice/InvoicePreviewTable";
 import { InvoicePreviewFooter } from "@/components/invoice/InvoicePreviewFooter";
+import { InvoicePreviewSummary } from "@/components/invoice/InvoicePreviewSummary";
 import { InvoiceItemRowForm } from "@/components/invoice/InvoiceItemRowForm";
 import { useDocumentEditor } from "@/hooks/useDocumentEditor";
 import { MobileTabBar } from "@/components/MobileTabBar";
@@ -21,7 +23,7 @@ import { Tab } from "@/types/forms";
 
 import { DEFAULT_DATA } from "@/data/invoice";
 
-export default function InvoicePage() {
+function InvoicePageClient() {
   const previewRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<Tab>("form");
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -36,7 +38,7 @@ export default function InvoicePage() {
     handlePrint,
   } = useDocumentEditor<InvoiceData, InvoiceLineItem>(
     DEFAULT_DATA,
-    () => ({ description: "", amount: "" }),
+    () => ({ description: "", gstRate: "0", qty: "1", rate: "0" }),
     buildInvoiceHtml,
   );
 
@@ -48,6 +50,7 @@ export default function InvoicePage() {
         title="Invoice Generator"
         onPrint={handlePrint}
         printing={printing}
+        accentClass="bg-[#7A0000] hover:bg-[#5c0000]"
       />
       <MobileTabBar activeTab={activeTab} onTabChange={setActiveTab} />
 
@@ -71,32 +74,41 @@ export default function InvoicePage() {
               <div className="space-y-3">
                 <FormInput
                   label="Invoice No."
-                  placeholder="e.g. INV-001"
+                  placeholder="e.g. DSF-2026-005"
                   value={data.invoiceNo}
                   onChange={(val) => setField("invoiceNo", val)}
                 />
                 <FormInput
-                  label="Date"
+                  label="Invoice Date"
                   type="date"
                   value={data.date}
                   onChange={(val) => setField("date", val)}
                 />
                 <FormInput
-                  label="UTR No."
-                  placeholder="Unique Tax Reference"
-                  value={data.utrNo}
-                  onChange={(val) => setField("utrNo", val)}
+                  label="Due Date"
+                  type="date"
+                  value={data.dueDate}
+                  onChange={(val) => setField("dueDate", val)}
                 />
               </div>
             </section>
 
             <ClientDetailsForm
               clientAddress={data.clientAddress}
-              forProject={data.forProject}
-              projectLabel="For (Project Description)"
-              projectPlaceholder="Single Story Side Extension"
               onChangeField={(field, val) => setField(field, val)}
             />
+
+            <section>
+              <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 border-b pb-1">
+                Supply Details
+              </h2>
+              <FormInput
+                label="Country of Supply"
+                placeholder="India"
+                value={data.countryOfSupply}
+                onChange={(val) => setField("countryOfSupply", val)}
+              />
+            </section>
 
             <section>
               <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 border-b pb-1">
@@ -115,7 +127,7 @@ export default function InvoicePage() {
                 ))}
                 <button
                   onClick={addItem}
-                  className="w-full border border-dashed border-blue-300 text-blue-600 hover:bg-blue-50 text-sm py-2 rounded-lg transition-colors font-medium cursor-pointer">
+                  className="w-full border border-dashed border-[#7A0000] text-[#7A0000] hover:bg-[#7A0000]/5 text-sm py-2 rounded-lg transition-colors font-medium cursor-pointer">
                   + Add Item
                 </button>
               </div>
@@ -123,41 +135,41 @@ export default function InvoicePage() {
               <div className="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-3 space-y-1 text-sm text-gray-800">
                 <div className="flex justify-between">
                   <span className="text-gray-500">Subtotal</span>
-                  <span>
-                    £
-                    {totals.subtotal.toLocaleString("en-GB", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </span>
+                  <span>{totals.fmtSubtotal}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-550">VAT @ 20%</span>
-                  <span>
-                    £
-                    {totals.vat.toLocaleString("en-GB", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </span>
+                  <span className="text-gray-550">IGST Tax</span>
+                  <span>₹ {totals.fmtVat}</span>
                 </div>
-                <div className="flex justify-between font-bold border-t border-gray-200 pt-1 mt-1 text-gray-900">
-                  <span>Amount Payable</span>
-                  <span>
-                    £
-                    {totals.total.toLocaleString("en-GB", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </span>
+                <div className="flex justify-between font-bold border-t border-gray-200 pt-1 mt-1 text-[#7A0000]">
+                  <span>Total Amount</span>
+                  <span>{totals.fmtTotal}</span>
                 </div>
               </div>
             </section>
 
             <BankDetailsForm
-              vatNo={data?.vatNo}
-              bank={data?.bank}
-              accountNo={data?.accountNo}
-              sortCode={data?.sortCode}
+              bank={data.bank}
+              accountName={data.accountName}
+              accountNo={data.accountNo}
+              ifsc={data.ifsc}
+              accountType={data.accountType}
+              upiId={data.upiId}
+              qrCode={data.qrCode}
               onChangeField={(field, val) => setField(field, val)}
             />
+
+            <section>
+              <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 border-b pb-1">
+                Terms & Conditions
+              </h2>
+              <FormTextarea
+                label="T&C text"
+                rows={3}
+                value={data.termsAndConditions}
+                onChange={(val) => setField("termsAndConditions", val)}
+              />
+            </section>
           </div>
         </aside>
 
@@ -168,7 +180,7 @@ export default function InvoicePage() {
           {/* Desktop Sidebar Toggle Button */}
           <button
             onClick={() => setSidebarOpen((v) => !v)}
-            className="hidden sm:flex absolute left-4 top-4 z-20 bg-white border border-gray-200 shadow-md p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all cursor-pointer items-center justify-center"
+            className="hidden sm:flex absolute left-4 top-4 z-20 bg-white border border-gray-200 shadow-md p-2 rounded-lg text-gray-650 hover:text-gray-900 hover:bg-gray-50 transition-all cursor-pointer items-center justify-center"
             title={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}>
             {sidebarOpen ? (
               <svg
@@ -210,14 +222,16 @@ export default function InvoicePage() {
               background: "#fff",
               boxShadow: "0 4px 32px rgba(0,0,0,0.12)",
               padding: "45px 53px",
-              fontFamily: "Arial, Helvetica, sans-serif",
-              fontSize: "10pt",
+              fontFamily: "'Open Sans', Arial, Helvetica, sans-serif",
+              fontWeight: 300,
+              fontSize: "9.5pt",
               color: "#111",
               flexShrink: 0,
             }}>
             <InvoicePreviewHeader data={data} />
             <InvoicePreviewClient data={data} />
             <InvoicePreviewTable items={data?.items} />
+            <InvoicePreviewSummary data={data} />
             <InvoicePreviewFooter data={data} />
           </div>
         </main>
@@ -225,3 +239,9 @@ export default function InvoicePage() {
     </div>
   );
 }
+
+const InvoicePage = dynamic(() => Promise.resolve(InvoicePageClient), {
+  ssr: false,
+});
+
+export default InvoicePage;

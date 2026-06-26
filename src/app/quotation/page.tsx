@@ -1,35 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { COMPANY } from "@/data/company";
-import {
-  QuotationData,
-  QuotationLineItem,
-  PaymentTerm,
-} from "@/types/quotation";
+import { QuotationData, QuotationLineItem } from "@/types/quotation";
 import { buildQuotationHtml } from "@/lib/quotationBuilder";
 import { calcQuotationTotal } from "@/utils/quotation";
-import { DEFAULT_PAYMENT_TERMS, DEFAULT_DATA } from "@/data/quotation";
-import { useDocumentEditor } from "@/hooks/useDocumentEditor";
 import { GeneratorHeader } from "@/components/GeneratorHeader";
-import { FormInput } from "@/components/FormFields";
+import { FormInput, FormTextarea } from "@/components/FormFields";
 import { OwnerDetailsForm } from "@/components/OwnerDetailsForm";
 import { ClientDetailsForm } from "@/components/ClientDetailsForm";
+import { BankDetailsForm } from "@/components/BankDetailsForm";
 import { QuotationPreviewHeader } from "@/components/quotation/QuotationPreviewHeader";
 import { QuotationPreviewClient } from "@/components/quotation/QuotationPreviewClient";
 import { QuotationPreviewTable } from "@/components/quotation/QuotationPreviewTable";
 import { QuotationPreviewFooter } from "@/components/quotation/QuotationPreviewFooter";
-import { PaymentTermRowForm } from "@/components/quotation/PaymentTermRowForm";
+import { QuotationPreviewSummary } from "@/components/quotation/QuotationPreviewSummary";
 import { QuotationItemRowForm } from "@/components/quotation/QuotationItemRowForm";
+import { useDocumentEditor } from "@/hooks/useDocumentEditor";
 import { MobileTabBar } from "@/components/MobileTabBar";
 import { Tab } from "@/types/forms";
 
-import { usePaymentTerms } from "@/hooks/usePaymentTerms";
+import { DEFAULT_DATA } from "@/data/quotation";
 
-export default function QuotationPage() {
+function QuotationPageClient() {
+  const previewRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState<Tab>("form");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
   const {
     data,
-    setData,
     printing,
     setField,
     setItem,
@@ -38,22 +38,11 @@ export default function QuotationPage() {
     handlePrint,
   } = useDocumentEditor<QuotationData, QuotationLineItem>(
     DEFAULT_DATA,
-    () => ({ title: "", description: "", amount: "" }),
+    () => ({ description: "", gstRate: "0", qty: "1", rate: "0" }),
     buildQuotationHtml,
   );
 
-  const { setPaymentTerm, addPaymentTerm, removePaymentTerm } = usePaymentTerms<
-    QuotationData,
-    PaymentTerm
-  >(setData, DEFAULT_PAYMENT_TERMS, () => ({
-    description: "",
-    percentage: "",
-  }));
-
-  const totals = calcQuotationTotal(data?.items);
-
-  const [activeTab, setActiveTab] = useState<Tab>("form");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const totals = calcQuotationTotal(data.items);
 
   return (
     <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
@@ -61,7 +50,7 @@ export default function QuotationPage() {
         title="Quotation Generator"
         onPrint={handlePrint}
         printing={printing}
-        accentClass="bg-gray-900 hover:bg-black"
+        accentClass="bg-[#7A0000] hover:bg-[#5c0000]"
       />
       <MobileTabBar activeTab={activeTab} onTabChange={setActiveTab} />
 
@@ -85,94 +74,101 @@ export default function QuotationPage() {
               <div className="space-y-3">
                 <FormInput
                   label="Quotation No."
-                  placeholder="e.g. QT-001"
+                  placeholder="e.g. LC-May-05"
                   value={data.quotationNo}
                   onChange={(val) => setField("quotationNo", val)}
                 />
                 <FormInput
-                  label="Date"
+                  label="Quotation Date"
                   type="date"
                   value={data.date}
                   onChange={(val) => setField("date", val)}
+                />
+                <FormInput
+                  label="Valid Till Date"
+                  type="date"
+                  value={data.validTillDate}
+                  onChange={(val) => setField("validTillDate", val)}
                 />
               </div>
             </section>
 
             <ClientDetailsForm
               clientAddress={data.clientAddress}
-              forProject={data.forProject}
-              projectLabel="For (Project Type)"
-              projectPlaceholder="Double Storey Rear and Front Extension"
               onChangeField={(field, val) => setField(field, val)}
-              totalLabel={data.totalLabel}
-              onChangeTotalLabel={(val) => setField("totalLabel", val)}
             />
+
+            <section>
+              <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 border-b pb-1">
+                Supply Details
+              </h2>
+              <FormInput
+                label="Country of Supply"
+                placeholder="India"
+                value={data.countryOfSupply}
+                onChange={(val) => setField("countryOfSupply", val)}
+              />
+            </section>
 
             <section>
               <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 border-b pb-1">
                 Line Items
               </h2>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {data?.items?.map((item, idx) => (
                   <QuotationItemRowForm
                     key={idx}
                     idx={idx}
                     item={item}
-                    showRemove={data?.items?.length > 1}
+                    showRemove={(data?.items?.length || 0) > 1}
                     onRemove={removeItem}
                     onChangeField={setItem}
                   />
                 ))}
                 <button
                   onClick={addItem}
-                  className="w-full border border-dashed border-gray-300 text-gray-600 hover:bg-gray-50 text-sm py-2 rounded-lg transition-colors font-medium cursor-pointer">
+                  className="w-full border border-dashed border-[#7A0000] text-[#7A0000] hover:bg-[#7A0000]/5 text-sm py-2 rounded-lg transition-colors font-medium cursor-pointer">
                   + Add Item
                 </button>
               </div>
-              {/* Total */}
-              <div className="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm text-gray-800">
-                <div className="flex justify-between font-bold text-gray-900">
-                  <span>Total Cost</span>
-                  <span>
-                    {totals?.total > 0
-                      ? `£${totals?.total?.toLocaleString("en-GB", {
-                          minimumFractionDigits: 2,
-                        })}`
-                      : "—"}
-                  </span>
+              {/* Running totals */}
+              <div className="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-3 space-y-1 text-sm text-gray-800">
+                <div className="flex justify-between">
+                  <span className="text-gray-550">Subtotal</span>
+                  <span>{totals.fmtSubtotal}</span>
                 </div>
-                <div className="text-xs text-gray-400 mt-1">
-                  N.B. Subject to standard rate of VAT @ 20%
+                <div className="flex justify-between">
+                  <span className="text-gray-550">IGST Tax</span>
+                  <span>₹ {totals.fmtVat}</span>
+                </div>
+                <div className="flex justify-between font-bold border-t border-gray-200 pt-1 mt-1 text-[#7A0000]">
+                  <span>Total Amount</span>
+                  <span>{totals.fmtTotal}</span>
                 </div>
               </div>
             </section>
 
+            <BankDetailsForm
+              bank={data.bank}
+              accountName={data.accountName}
+              accountNo={data.accountNo}
+              ifsc={data.ifsc}
+              accountType={data.accountType}
+              upiId={data.upiId}
+              qrCode={data.qrCode}
+              onChangeField={(field, val) => setField(field, val)}
+            />
+
             <section>
               <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 border-b pb-1">
-                Payment Terms
+                Additional Notes
               </h2>
-              <div className="space-y-2">
-                {(data?.paymentTerms || DEFAULT_PAYMENT_TERMS)?.map(
-                  (term, idx) => (
-                    <PaymentTermRowForm
-                      key={idx}
-                      idx={idx}
-                      term={term}
-                      showRemove={
-                        (data?.paymentTerms || DEFAULT_PAYMENT_TERMS)?.length >
-                        1
-                      }
-                      onRemove={removePaymentTerm}
-                      onChangeField={setPaymentTerm}
-                    />
-                  ),
-                )}
-                <button
-                  onClick={addPaymentTerm}
-                  className="w-full border border-dashed border-gray-300 text-gray-600 hover:bg-gray-50 text-xs py-2 rounded-lg transition-colors font-medium cursor-pointer">
-                  + Add Payment Term
-                </button>
-              </div>
+              <FormTextarea
+                label="Notes text"
+                rows={3}
+                value={data.additionalNotes}
+                onChange={(val) => setField("additionalNotes", val)}
+              />
             </section>
           </div>
         </aside>
@@ -184,7 +180,7 @@ export default function QuotationPage() {
           {/* Desktop Sidebar Toggle Button */}
           <button
             onClick={() => setSidebarOpen((v) => !v)}
-            className="hidden sm:flex absolute left-4 top-4 z-20 bg-white border border-gray-200 shadow-md p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all cursor-pointer items-center justify-center"
+            className="hidden sm:flex absolute left-4 top-4 z-20 bg-white border border-gray-200 shadow-md p-2 rounded-lg text-gray-650 hover:text-gray-900 hover:bg-gray-50 transition-all cursor-pointer items-center justify-center"
             title={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}>
             {sidebarOpen ? (
               <svg
@@ -218,6 +214,7 @@ export default function QuotationPage() {
           </button>
 
           <div
+            ref={previewRef}
             className="mx-auto"
             style={{
               width: "794px",
@@ -225,18 +222,16 @@ export default function QuotationPage() {
               background: "#fff",
               boxShadow: "0 4px 32px rgba(0,0,0,0.12)",
               padding: "45px 53px",
-              fontFamily: "Arial, Helvetica, sans-serif",
-              fontSize: "10pt",
+              fontFamily: "'Open Sans', Arial, Helvetica, sans-serif",
+              fontWeight: 300,
+              fontSize: "9.5pt",
               color: "#111",
               flexShrink: 0,
             }}>
             <QuotationPreviewHeader data={data} />
             <QuotationPreviewClient data={data} />
-            <QuotationPreviewTable
-              items={data?.items}
-              totalLabel={data?.totalLabel}
-              totals={totals}
-            />
+            <QuotationPreviewTable items={data?.items} />
+            <QuotationPreviewSummary data={data} />
             <QuotationPreviewFooter data={data} />
           </div>
         </main>
@@ -244,3 +239,9 @@ export default function QuotationPage() {
     </div>
   );
 }
+
+const QuotationPage = dynamic(() => Promise.resolve(QuotationPageClient), {
+  ssr: false,
+});
+
+export default QuotationPage;
