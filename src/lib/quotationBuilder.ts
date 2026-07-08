@@ -142,15 +142,18 @@ export function buildQuotationHtml(
       </table>
     </div>
 
-    <!-- UPI Scan -->
+    <!-- UPI Scan
     <div class="summary-upi">
       <div class="upi-title">Scan to pay via UPI</div>
       <div class="upi-note">Maximum of 1 lakh canbe transferred via upi in a single day</div>
+      <!--
       <div class="upi-qr-placeholder">
         ${data.qrCode ? `<img src="${data.qrCode}" alt="UPI QR Code" />` : `<span style="font-size: 7.5pt; color: #999; font-weight: bold; text-transform: uppercase;">Missing</span>`}
       </div>
+      -->
       <div class="upi-id">${data.upiId || COMPANY.upiId}</div>
     </div>
+    -->
 
     <!-- Totals -->
     <div class="summary-totals">

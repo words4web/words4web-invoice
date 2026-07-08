@@ -105,6 +105,7 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
         </div>
 
         {/* UPI Scan */}
+        {/*
         <div
           style={{
             width: "30%",
@@ -169,6 +170,7 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
             {data.upiId || COMPANY.upiId}
           </div>
         </div>
+        */}
 
         {/* Totals */}
         <div

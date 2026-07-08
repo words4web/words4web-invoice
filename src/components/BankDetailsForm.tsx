@@ -53,6 +53,7 @@ export function BankDetailsForm({
           value={upiId}
           onChange={(val) => onChangeField("upiId", val)}
         />
+        {/*
         <div>
           <label className="block text-xs font-semibold text-gray-500 uppercase mb-1 tracking-wide">
             Custom UPI QR Code
@@ -92,7 +93,6 @@ export function BankDetailsForm({
           </div>
           {qrCode && (
             <div className="mt-2 flex justify-center border border-gray-200 p-2 bg-gray-50 rounded">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={qrCode}
                 alt="Uploaded QR Code Preview"
@@ -101,6 +101,7 @@ export function BankDetailsForm({
             </div>
           )}
         </div>
+        */}
       </div>
     </section>
   );
