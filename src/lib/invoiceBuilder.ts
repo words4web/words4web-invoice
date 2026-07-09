@@ -10,13 +10,35 @@ export function buildInvoiceHtml(
   data: InvoiceData,
   logoBase64: string,
 ): string {
-  const totals = calcInvoiceTotals(data.items);
-  const itemRows = data.items.filter((i) => i.description || i.qty || i.rate);
+  const currency = data?.currency || "INR";
+  const totals = calcInvoiceTotals(data?.items, currency);
+  const itemRows = data?.items?.filter(
+    (i) => i?.description || i?.qty || i?.rate,
+  );
+
+  const isVat = currency !== "INR";
+  const taxHeader1 = isVat ? "VAT %" : "GST";
+  const taxHeader2 = isVat ? "VAT" : "IGST";
+  const taxSummaryLabel = isVat ? "VAT" : "TAX";
+
+  const currencySymbols = {
+    INR: "₹",
+    EUR: "€",
+    GBP: "£",
+  };
+  const currencyLocales = {
+    INR: "en-IN",
+    EUR: "en-IE",
+    GBP: "en-GB",
+  };
+
+  const symbol = currencySymbols[currency] || "₹";
+  const locale = currencyLocales[currency] || "en-IN";
 
   const formatVal = (val: number) =>
     val % 1 === 0
-      ? val.toLocaleString("en-IN", { maximumFractionDigits: 0 })
-      : val.toLocaleString("en-IN", {
+      ? val.toLocaleString(locale, { maximumFractionDigits: 0 })
+      : val.toLocaleString(locale, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         });
@@ -35,10 +57,10 @@ export function buildInvoiceHtml(
         <td class="desc-cell">${item.description.replace(/\n/g, "<br>")}</td>
         <td class="center-cell">${item.gstRate}%</td>
         <td class="center-cell">${item.qty}</td>
-        <td class="num-cell">₹${formatVal(rate)}</td>
-        <td class="num-cell">₹${formatVal(amount)}</td>
-        <td class="num-cell">₹${formatVal(igst)}</td>
-        <td class="num-cell">₹${formatVal(total)}</td>
+        <td class="num-cell">${symbol}${formatVal(rate)}</td>
+        <td class="num-cell">${symbol}${formatVal(amount)}</td>
+        <td class="num-cell">${symbol}${formatVal(igst)}</td>
+        <td class="num-cell">${symbol}${formatVal(total)}</td>
       </tr>`;
     })
     .join("");
@@ -115,11 +137,11 @@ export function buildInvoiceHtml(
     <thead>
       <tr>
         <th class="col-desc">ITEMS</th>
-        <th class="col-gst">GST</th>
+        <th class="col-gst">${taxHeader1}</th>
         <th class="col-qty">QTY</th>
         <th class="col-rate">RATE</th>
         <th class="col-amt">AMOUNT</th>
-        <th class="col-igst">IGST</th>
+        <th class="col-igst">${taxHeader2}</th>
         <th class="col-tot">TOTAL</th>
       </tr>
     </thead>
@@ -142,19 +164,6 @@ export function buildInvoiceHtml(
       </table>
     </div>
 
-    <!-- UPI Scan
-    <div class="summary-upi">
-      <div class="upi-title">Scan to pay via UPI</div>
-      <div class="upi-note">Maximum of 1 lakh canbe transferred via upi in a single day</div>
-      <!--
-      <div class="upi-qr-placeholder">
-        ${data.qrCode ? `<img src="${data.qrCode}" alt="UPI QR Code" />` : `<span style="font-size: 7.5pt; color: #999; font-weight: bold; text-transform: uppercase;">Missing</span>`}
-      </div>
-      -->
-      <div class="upi-id">${data.upiId || COMPANY.upiId}</div>
-    </div>
-    -->
-
     <!-- Totals -->
     <div class="summary-totals">
       <table class="totals-table">
@@ -163,8 +172,8 @@ export function buildInvoiceHtml(
           <td>${totals.fmtSubtotal}</td>
         </tr>
         <tr>
-          <td>TAX</td>
-          <td>₹ ${totals.fmtVat}</td>
+          <td>${taxSummaryLabel}</td>
+          <td>${totals.fmtVatWithSym}</td>
         </tr>
         <tr class="total-row">
           <td>TOTAL</td>

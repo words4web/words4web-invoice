@@ -7,7 +7,19 @@ export function InvoiceItemRowForm({
   showRemove,
   onRemove,
   onChangeField,
+  currency = 'INR',
 }: InvoiceItemRowFormProps) {
+  const isVat = currency !== 'INR';
+  const taxLabel = isVat ? "VAT Rate (%)" : "GST Rate (%)";
+
+  const currencySymbols = {
+    INR: "₹",
+    EUR: "€",
+    GBP: "£",
+  };
+  const symbol = currencySymbols[currency] || "₹";
+  const rateLabel = `Rate (${symbol})`;
+
   return (
     <div className="border border-gray-100 rounded-lg p-3 space-y-2 bg-gray-50">
       <div className="flex items-center justify-between mb-1">
@@ -31,7 +43,7 @@ export function InvoiceItemRowForm({
       />
       <div className="grid grid-cols-3 gap-2">
         <FormInput
-          label="GST Rate (%)"
+          label={taxLabel}
           type="number"
           placeholder="0"
           min={0}
@@ -55,7 +67,7 @@ export function InvoiceItemRowForm({
           }
         />
         <FormInput
-          label="Rate (₹)"
+          label={rateLabel}
           type="number"
           placeholder="0"
           min={1}

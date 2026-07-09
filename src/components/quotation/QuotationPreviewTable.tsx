@@ -1,13 +1,34 @@
 import { QuotationPreviewTableProps } from "@/types/quotation";
 
-export function QuotationPreviewTable({ items }: QuotationPreviewTableProps) {
+export function QuotationPreviewTable({
+  items,
+  currency = "INR",
+}: QuotationPreviewTableProps) {
   const filteredItems =
     items?.filter((i) => i.description || i.qty || i.rate) || [];
 
+  const isVat = currency !== "INR";
+  const taxHeader1 = isVat ? "VAT %" : "GST";
+  const taxHeader2 = isVat ? "VAT" : "IGST";
+
+  const currencySymbols = {
+    INR: "₹",
+    EUR: "€",
+    GBP: "£",
+  };
+  const currencyLocales = {
+    INR: "en-IN",
+    EUR: "en-IE",
+    GBP: "en-GB",
+  };
+
+  const symbol = currencySymbols[currency] || "₹";
+  const locale = currencyLocales[currency] || "en-IN";
+
   const formatVal = (val: number) =>
     val % 1 === 0
-      ? val.toLocaleString("en-IN", { maximumFractionDigits: 0 })
-      : val.toLocaleString("en-IN", {
+      ? val.toLocaleString(locale, { maximumFractionDigits: 0 })
+      : val.toLocaleString(locale, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         });
@@ -41,7 +62,7 @@ export function QuotationPreviewTable({ items }: QuotationPreviewTableProps) {
               color: "#fff",
               width: "55px",
             }}>
-            GST
+            {taxHeader1}
           </th>
           <th
             style={{
@@ -85,7 +106,7 @@ export function QuotationPreviewTable({ items }: QuotationPreviewTableProps) {
               color: "#fff",
               width: "80px",
             }}>
-            IGST
+            {taxHeader2}
           </th>
           <th
             style={{
@@ -155,7 +176,8 @@ export function QuotationPreviewTable({ items }: QuotationPreviewTableProps) {
                   color: "#111",
                   fontWeight: "normal",
                 }}>
-                ₹{formatVal(rate)}
+                {symbol}
+                {formatVal(rate)}
               </td>
               <td
                 style={{
@@ -167,7 +189,8 @@ export function QuotationPreviewTable({ items }: QuotationPreviewTableProps) {
                   color: "#111",
                   fontWeight: "normal",
                 }}>
-                ₹{formatVal(amount)}
+                {symbol}
+                {formatVal(amount)}
               </td>
               <td
                 style={{
@@ -179,7 +202,8 @@ export function QuotationPreviewTable({ items }: QuotationPreviewTableProps) {
                   color: "#111",
                   fontWeight: "normal",
                 }}>
-                ₹{formatVal(igst)}
+                {symbol}
+                {formatVal(igst)}
               </td>
               <td
                 style={{
@@ -191,7 +215,8 @@ export function QuotationPreviewTable({ items }: QuotationPreviewTableProps) {
                   color: "#111",
                   fontWeight: "normal",
                 }}>
-                ₹{formatVal(total)}
+                {symbol}
+                {formatVal(total)}
               </td>
             </tr>
           );

@@ -3,7 +3,7 @@ import { calcInvoiceTotals } from "@/utils/invoice";
 import { COMPANY } from "@/data/company";
 
 export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
-  const totals = calcInvoiceTotals(data.items);
+  const totals = calcInvoiceTotals(data.items, data.currency);
 
   return (
     <div style={{ marginTop: "16px", fontSize: "9pt" }}>
@@ -214,7 +214,7 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
                     color: "#555",
                     fontSize: "8.5pt",
                   }}>
-                  TAX
+                  {data.currency && data.currency !== "INR" ? "VAT" : "TAX"}
                 </td>
                 <td
                   style={{
@@ -225,7 +225,7 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
                     color: "#111",
                     fontSize: "8.5pt",
                   }}>
-                  ₹ {totals.fmtVat}
+                  {totals.fmtVatWithSym}
                 </td>
               </tr>
               <tr style={{ color: "#111" }}>

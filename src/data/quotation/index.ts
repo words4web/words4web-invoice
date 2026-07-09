@@ -14,6 +14,7 @@ export const DEFAULT_DATA: QuotationData = {
     "Live Construction\n106 Valley Drive Gravesend,Kent DA12,SRX\nUnited Kingdom",
   countryOfSupply: "United Kingdom",
   items: DEFAULT_ITEMS,
+  currency: "INR",
   bank: COMPANY.bank,
   accountName: COMPANY.accountName,
   accountNo: COMPANY.accountNo,

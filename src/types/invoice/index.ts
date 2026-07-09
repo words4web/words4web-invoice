@@ -12,6 +12,7 @@ export interface InvoiceData {
   clientAddress: string;
   countryOfSupply: string;
   items: InvoiceLineItem[];
+  currency?: "INR" | "EUR" | "GBP";
 
   // Bank details
   bank: string;
@@ -38,4 +39,5 @@ export interface InvoicePreviewProps {
 
 export interface InvoicePreviewTableProps {
   items: InvoiceLineItem[];
+  currency?: "INR" | "EUR" | "GBP";
 }

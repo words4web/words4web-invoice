@@ -1,7 +1,7 @@
 import { InvoiceLineItem } from "@/types/invoice";
 
 /** Compute subtotal, IGST/VAT, and total from line items using GST columns */
-export function calcInvoiceTotals(items: InvoiceLineItem[]) {
+export function calcInvoiceTotals(items: InvoiceLineItem[], currency: 'INR' | 'EUR' | 'GBP' = 'INR') {
   let subtotal = 0;
   let gst = 0;
   let total = 0;
@@ -26,21 +26,36 @@ export function calcInvoiceTotals(items: InvoiceLineItem[]) {
     };
   });
 
+  const currencySymbols = {
+    INR: "₹",
+    EUR: "€",
+    GBP: "£",
+  };
+
+  const currencyLocales = {
+    INR: "en-IN",
+    EUR: "en-IE",
+    GBP: "en-GB",
+  };
+
+  const symbol = currencySymbols[currency] || "₹";
+  const locale = currencyLocales[currency] || "en-IN";
+
   const fmt = (n: number) => {
     const formatted =
       n % 1 === 0
-        ? n.toLocaleString("en-IN", { maximumFractionDigits: 0 })
-        : n.toLocaleString("en-IN", {
+        ? n.toLocaleString(locale, { maximumFractionDigits: 0 })
+        : n.toLocaleString(locale, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           });
-    return `₹ ${formatted}`;
+    return `${symbol} ${formatted}`;
   };
 
   const fmtRaw = (n: number) =>
     n % 1 === 0
-      ? n.toLocaleString("en-IN", { maximumFractionDigits: 0 })
-      : n.toLocaleString("en-IN", {
+      ? n.toLocaleString(locale, { maximumFractionDigits: 0 })
+      : n.toLocaleString(locale, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         });

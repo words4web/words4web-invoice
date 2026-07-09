@@ -42,7 +42,14 @@ function QuotationPageClient() {
     buildQuotationHtml,
   );
 
-  const totals = calcQuotationTotal(data.items);
+  const totals = calcQuotationTotal(data.items, data.currency);
+
+  const currencySymbols: Record<string, string> = {
+    INR: "₹",
+    EUR: "€",
+    GBP: "£",
+  };
+  const currentSymbol = currencySymbols[data.currency || "INR"] || "₹";
 
   return (
     <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
@@ -59,6 +66,27 @@ function QuotationPageClient() {
         <aside
           className={`bg-white border-r border-gray-200 text-gray-800 sm:shrink-0 w-full transition-[width] duration-300 overflow-hidden ${sidebarOpen ? "sm:w-[260px] md:w-[320px] lg:w-[400px]" : "sm:w-0"} ${activeTab === "form" ? "flex flex-col" : "hidden"} sm:flex sm:flex-col`}>
           <div className="flex-1 overflow-y-auto p-5 space-y-5 min-w-[260px] md:min-w-[320px] lg:min-w-[400px]">
+            <section className="bg-gray-50 border border-gray-150 rounded-lg p-3">
+              <div className="flex flex-col space-y-1">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                  Document Currency
+                </label>
+                <select
+                  value={data.currency || "INR"}
+                  onChange={(e) =>
+                    setField(
+                      "currency",
+                      e.target.value as "INR" | "EUR" | "GBP",
+                    )
+                  }
+                  className="w-full bg-white border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#7A0000] text-gray-800 cursor-pointer font-medium mt-1.5">
+                  <option value="INR">INR (₹) / GST Mode</option>
+                  <option value="EUR">EUR (€) / VAT Mode</option>
+                  <option value="GBP">GBP (£) / VAT Mode</option>
+                </select>
+              </div>
+            </section>
+
             <OwnerDetailsForm
               ownerAddress={data.ownerAddress || ""}
               ownerPhone={data.ownerPhone || ""}
@@ -123,6 +151,7 @@ function QuotationPageClient() {
                     showRemove={(data?.items?.length || 0) > 1}
                     onRemove={removeItem}
                     onChangeField={setItem}
+                    currency={data.currency}
                   />
                 ))}
                 <button
@@ -138,8 +167,14 @@ function QuotationPageClient() {
                   <span>{totals.fmtSubtotal}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-550">IGST Tax</span>
-                  <span>₹ {totals.fmtVat}</span>
+                  <span className="text-gray-550">
+                    {data.currency === "INR" || !data.currency
+                      ? "IGST Tax"
+                      : "VAT Tax"}
+                  </span>
+                  <span>
+                    {currentSymbol} {totals.fmtVat}
+                  </span>
                 </div>
                 <div className="flex justify-between font-bold border-t border-gray-200 pt-1 mt-1 text-[#7A0000]">
                   <span>Total Amount</span>
@@ -230,7 +265,10 @@ function QuotationPageClient() {
             }}>
             <QuotationPreviewHeader data={data} />
             <QuotationPreviewClient data={data} />
-            <QuotationPreviewTable items={data?.items} />
+            <QuotationPreviewTable
+              items={data?.items}
+              currency={data.currency}
+            />
             <QuotationPreviewSummary data={data} />
             <QuotationPreviewFooter data={data} />
           </div>

@@ -18,6 +18,7 @@ export const DEFAULT_DATA: InvoiceData = {
   clientAddress: "DSF Food Private\nLimited.\nHaryana,Panipat",
   countryOfSupply: "India",
   items: DEFAULT_ITEMS,
+  currency: "INR",
   bank: COMPANY.bank,
   accountName: COMPANY.accountName,
   accountNo: COMPANY.accountNo,
