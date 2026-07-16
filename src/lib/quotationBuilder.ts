@@ -9,6 +9,7 @@ import { getTodayStr } from "@/utils/date";
 export function buildQuotationHtml(
   data: QuotationData,
   logoBase64: string,
+  signatureBase64: string,
 ): string {
   const currency = data?.currency || "INR";
   const totals = calcQuotationTotal(data?.items, currency);
@@ -188,7 +189,9 @@ export function buildQuotationHtml(
 
   <!-- SIGNATORY -->
   <div class="signatory-section">
-    <div class="signatory-box"></div>
+    <div class="signatory-box" style="height: auto; margin-bottom: 2pt;">
+      <img src="${signatureBase64}" alt="Signature" style="height: 45pt; width: auto; display: block; margin-bottom: -8pt;" />
+    </div>
     <div class="signatory-label">Authorised Signatory</div>
   </div>
 

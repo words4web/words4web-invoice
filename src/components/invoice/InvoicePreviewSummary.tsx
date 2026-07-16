@@ -265,7 +265,25 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
           flexDirection: "column",
           alignItems: "flex-end",
         }}>
-        <div style={{ height: "40px" }} />
+        <div
+          style={{
+            height: "45px",
+            display: "flex",
+            alignItems: "flex-end",
+            marginBottom: "4px",
+          }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/deepali.sign.jpeg"
+            alt="Signature"
+            style={{
+              height: "45px",
+              width: "auto",
+              display: "block",
+              marginBottom: "-8px",
+            }}
+          />
+        </div>
         <div
           style={{
             fontSize: "8pt",
