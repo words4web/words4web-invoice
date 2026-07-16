@@ -1,14 +1,20 @@
 import { QuotationLineItem } from "@/types/quotation";
 
 /** Compute subtotal, IGST/VAT, and total from quotation line items */
-export function calcQuotationTotal(items: QuotationLineItem[], currency: 'INR' | 'EUR' | 'GBP' = 'INR') {
+export function calcQuotationTotal(
+  items: QuotationLineItem[],
+  currency: "INR" | "EUR" | "GBP" = "INR",
+) {
   let subtotal = 0;
   let gst = 0;
   let total = 0;
 
   const processedItems = (items || [])?.map((item) => {
     const qty = parseFloat(item?.qty) || 0;
-    const rate = parseFloat(item?.rate) || 0;
+    let rate = parseFloat(item?.rate) || 0;
+    if (item?.isNegative) {
+      rate = -Math.abs(rate);
+    }
     const gstRatePercent = parseFloat(item?.gstRate) || 0;
 
     const amount = qty * rate;
@@ -42,23 +48,30 @@ export function calcQuotationTotal(items: QuotationLineItem[], currency: 'INR' |
   const locale = currencyLocales[currency] || "en-IN";
 
   const fmt = (n: number) => {
+    const isNeg = n < 0;
+    const absVal = Math.abs(n);
     const formatted =
-      n % 1 === 0
-        ? n.toLocaleString(locale, { maximumFractionDigits: 0 })
-        : n.toLocaleString(locale, {
+      absVal % 1 === 0
+        ? absVal.toLocaleString(locale, { maximumFractionDigits: 0 })
+        : absVal.toLocaleString(locale, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           });
-    return `${symbol} ${formatted}`;
+    return isNeg ? `-${symbol} ${formatted}` : `${symbol} ${formatted}`;
   };
 
-  const fmtRaw = (n: number) =>
-    n % 1 === 0
-      ? n.toLocaleString(locale, { maximumFractionDigits: 0 })
-      : n.toLocaleString(locale, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-         });
+  const fmtRaw = (n: number) => {
+    const isNeg = n < 0;
+    const absVal = Math.abs(n);
+    const formatted =
+      absVal % 1 === 0
+        ? absVal.toLocaleString(locale, { maximumFractionDigits: 0 })
+        : absVal.toLocaleString(locale, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+    return isNeg ? `-${formatted}` : formatted;
+  };
 
   return {
     subtotal,

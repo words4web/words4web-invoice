@@ -46,7 +46,10 @@ export function buildInvoiceHtml(
   const itemRowsHtml = itemRows
     .map((item) => {
       const qty = parseFloat(item.qty) || 0;
-      const rate = parseFloat(item.rate) || 0;
+      let rate = parseFloat(item.rate) || 0;
+      if (item.isNegative) {
+        rate = -Math.abs(rate);
+      }
       const gstRate = parseFloat(item.gstRate) || 0;
       const amount = qty * rate;
       const igst = amount * (gstRate / 100);
@@ -57,10 +60,10 @@ export function buildInvoiceHtml(
         <td class="desc-cell">${item.description.replace(/\n/g, "<br>")}</td>
         <td class="center-cell">${item.gstRate}%</td>
         <td class="center-cell">${item.qty}</td>
-        <td class="num-cell">${symbol}${formatVal(rate)}</td>
-        <td class="num-cell">${symbol}${formatVal(amount)}</td>
-        <td class="num-cell">${symbol}${formatVal(igst)}</td>
-        <td class="num-cell">${symbol}${formatVal(total)}</td>
+        <td class="num-cell">${symbol}${formatVal(Math.abs(rate))}</td>
+        <td class="num-cell">${symbol}${formatVal(Math.abs(amount))}</td>
+        <td class="num-cell">${symbol}${formatVal(Math.abs(igst))}</td>
+        <td class="num-cell">${symbol}${formatVal(Math.abs(total))}</td>
       </tr>`;
     })
     .join("");

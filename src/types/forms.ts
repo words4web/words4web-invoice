@@ -74,8 +74,8 @@ export interface InvoiceItemRowFormProps {
   item: InvoiceLineItem;
   showRemove: boolean;
   onRemove: () => void;
-  onChangeField: (field: keyof InvoiceLineItem, value: string) => void;
-  currency?: 'INR' | 'EUR' | 'GBP';
+  onChangeField: (field: keyof InvoiceLineItem, value: any) => void;
+  currency?: "INR" | "EUR" | "GBP";
 }
 
 export interface QuotationItemRowFormProps {
@@ -86,7 +86,7 @@ export interface QuotationItemRowFormProps {
   onChangeField: (
     idx: number,
     field: keyof QuotationLineItem,
-    value: string,
+    value: any,
   ) => void;
-  currency?: 'INR' | 'EUR' | 'GBP';
+  currency?: "INR" | "EUR" | "GBP";
 }

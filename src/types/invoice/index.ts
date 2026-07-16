@@ -3,6 +3,7 @@ export interface InvoiceLineItem {
   gstRate: string; // e.g. "0" or "18"
   qty: string;
   rate: string;
+  isNegative?: boolean;
 }
 
 export interface InvoiceData {

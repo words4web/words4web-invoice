@@ -56,13 +56,42 @@ export function QuotationItemRowForm({
           value={item?.qty}
           onChange={(val) => onChangeField(idx, "qty", val)}
         />
-        <FormInput
-          label={rateLabel}
-          type="number"
-          placeholder="0"
-          value={item?.rate}
-          onChange={(val) => onChangeField(idx, "rate", val)}
-        />
+        <div className="flex flex-col">
+          <label className="block text-xs font-semibold text-gray-500 uppercase mb-1 tracking-wide">
+            {rateLabel}
+          </label>
+          <div className="flex rounded shadow-sm">
+            <button
+              type="button"
+              onClick={() =>
+                onChangeField(idx, "isNegative", !item?.isNegative)
+              }
+              className={`px-2.5 py-1.5 text-sm font-bold border border-r-0 rounded-l transition-colors duration-150 cursor-pointer flex items-center justify-center min-w-[32px] ${
+                item?.isNegative
+                  ? "bg-red-50 border-red-200 text-red-650 hover:bg-red-100"
+                  : "bg-green-50 border-green-200 text-green-650 hover:bg-green-100"
+              }`}
+              title={
+                item?.isNegative ? "Negative (discount/deduction)" : "Positive"
+              }>
+              {item?.isNegative ? "−" : "+"}
+            </button>
+            <input
+              type="number"
+              placeholder="0"
+              min={0}
+              value={item?.rate}
+              onChange={(e) =>
+                onChangeField(
+                  idx,
+                  "rate",
+                  String(Math.max(0, Number(e.target.value))),
+                )
+              }
+              className="w-full border border-gray-200 rounded rounded-l-none px-2.5 py-1.5 text-sm focus:outline-none focus:border-blue-500 bg-white text-gray-900 placeholder-gray-400"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

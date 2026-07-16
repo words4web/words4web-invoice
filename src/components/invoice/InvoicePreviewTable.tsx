@@ -124,7 +124,10 @@ export function InvoicePreviewTable({
       <tbody>
         {filteredItems.map((item, idx) => {
           const qty = parseFloat(item.qty) || 0;
-          const rate = parseFloat(item.rate) || 0;
+          let rate = parseFloat(item.rate) || 0;
+          if (item.isNegative) {
+            rate = -Math.abs(rate);
+          }
           const gstRate = parseFloat(item.gstRate) || 0;
           const amount = qty * rate;
           const igst = amount * (gstRate / 100);
@@ -177,7 +180,7 @@ export function InvoicePreviewTable({
                   fontWeight: "normal",
                 }}>
                 {symbol}
-                {formatVal(rate)}
+                {formatVal(Math.abs(rate))}
               </td>
               <td
                 style={{
@@ -190,7 +193,7 @@ export function InvoicePreviewTable({
                   fontWeight: "normal",
                 }}>
                 {symbol}
-                {formatVal(amount)}
+                {formatVal(Math.abs(amount))}
               </td>
               <td
                 style={{
@@ -203,7 +206,7 @@ export function InvoicePreviewTable({
                   fontWeight: "normal",
                 }}>
                 {symbol}
-                {formatVal(igst)}
+                {formatVal(Math.abs(igst))}
               </td>
               <td
                 style={{
@@ -216,7 +219,7 @@ export function InvoicePreviewTable({
                   fontWeight: "normal",
                 }}>
                 {symbol}
-                {formatVal(total)}
+                {formatVal(Math.abs(total))}
               </td>
             </tr>
           );
