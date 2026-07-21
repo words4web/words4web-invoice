@@ -3,7 +3,10 @@ import { getLogoBase64, getSignatureBase64, getStampBase64 } from "@/lib/logo";
 import { printHtml } from "@/lib/print";
 import { getTodayStr } from "@/utils/date";
 
-export function useDocumentEditor<TData extends { items: TItem[] }, TItem>(
+export function useDocumentEditor<
+  TData extends { items: TItem[]; currency?: string },
+  TItem,
+>(
   initialData: TData,
   createEmptyItem: () => TItem,
   buildHtml: (
@@ -72,10 +75,12 @@ export function useDocumentEditor<TData extends { items: TItem[] }, TItem>(
   const handlePrint = useCallback(async () => {
     setPrinting(true);
     try {
+      const currency = data?.currency || "INR";
+      const stampPath = currency === "INR" ? "/stamp.png" : "/uk_stamp.png";
       const [logoBase64, signatureBase64, stampBase64] = await Promise.all([
         getLogoBase64(logoPath),
         getSignatureBase64(),
-        getStampBase64(),
+        getStampBase64(stampPath),
       ]);
       const html = buildHtml(data, logoBase64, signatureBase64, stampBase64);
       printHtml(html);

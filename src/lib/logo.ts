@@ -23,8 +23,10 @@ export async function getSignatureBase64(): Promise<string> {
 }
 
 /** Fetch stamp from public assets and convert to base64 for offline iframe printing */
-export async function getStampBase64(): Promise<string> {
-  const resp = await fetch("/stamp.png");
+export async function getStampBase64(
+  path: string = "/stamp.png",
+): Promise<string> {
+  const resp = await fetch(path);
   const blob = await resp.blob();
   return new Promise((resolve) => {
     const reader = new FileReader();

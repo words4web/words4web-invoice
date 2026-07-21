@@ -4,6 +4,7 @@ import { COMPANY } from "@/data/company";
 
 export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
   const totals = calcInvoiceTotals(data.items, data.currency);
+  const stampPath = data?.currency === "INR" ? "/stamp.png" : "/uk_stamp.png";
 
   return (
     <div style={{ marginTop: "16px", fontSize: "9pt" }}>
@@ -296,7 +297,7 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/stamp.png"
+            src={stampPath}
             alt="Stamp"
             style={{
               height: "65px",
