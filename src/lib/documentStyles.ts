@@ -382,7 +382,7 @@ export const DOCUMENT_CSS = `
     color: #333;
     border-top: 1px solid #333;
     padding-top: 4pt;
-    width: 140pt;
+    width: 180pt;
     text-align: center;
   }
 

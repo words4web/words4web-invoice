@@ -40,6 +40,7 @@ function QuotationPageClient() {
     DEFAULT_DATA,
     () => ({ description: "", gstRate: "0", qty: "1", rate: "0" }),
     buildQuotationHtml,
+    "/logo_purple.png",
   );
 
   const totals = calcQuotationTotal(data.items, data.currency);
@@ -57,7 +58,7 @@ function QuotationPageClient() {
         title="Quotation Generator"
         onPrint={handlePrint}
         printing={printing}
-        accentClass="bg-[#7A0000] hover:bg-[#5c0000]"
+        accentClass="bg-[#8C52FF] hover:bg-[#723df7]"
       />
       <MobileTabBar activeTab={activeTab} onTabChange={setActiveTab} />
 

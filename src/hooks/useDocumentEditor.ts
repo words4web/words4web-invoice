@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { getLogoBase64, getSignatureBase64 } from "@/lib/logo";
+import { getLogoBase64, getSignatureBase64, getStampBase64 } from "@/lib/logo";
 import { printHtml } from "@/lib/print";
 import { getTodayStr } from "@/utils/date";
 
@@ -10,7 +10,9 @@ export function useDocumentEditor<TData extends { items: TItem[] }, TItem>(
     data: TData,
     logoBase64: string,
     signatureBase64: string,
+    stampBase64: string,
   ) => string,
+  logoPath: string = "/logo.png",
 ) {
   const [data, setData] = useState<TData>(() => {
     const today = getTodayStr();
@@ -70,16 +72,17 @@ export function useDocumentEditor<TData extends { items: TItem[] }, TItem>(
   const handlePrint = useCallback(async () => {
     setPrinting(true);
     try {
-      const [logoBase64, signatureBase64] = await Promise.all([
-        getLogoBase64(),
+      const [logoBase64, signatureBase64, stampBase64] = await Promise.all([
+        getLogoBase64(logoPath),
         getSignatureBase64(),
+        getStampBase64(),
       ]);
-      const html = buildHtml(data, logoBase64, signatureBase64);
+      const html = buildHtml(data, logoBase64, signatureBase64, stampBase64);
       printHtml(html);
     } finally {
       setTimeout(() => setPrinting(false), 1500);
     }
-  }, [data, buildHtml]);
+  }, [data, buildHtml, logoPath]);
 
   return {
     data,

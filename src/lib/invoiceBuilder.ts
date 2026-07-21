@@ -10,6 +10,7 @@ export function buildInvoiceHtml(
   data: InvoiceData,
   logoBase64: string,
   signatureBase64: string,
+  stampBase64: string,
 ): string {
   const currency = data?.currency || "INR";
   const totals = calcInvoiceTotals(data?.items, currency);
@@ -189,10 +190,11 @@ export function buildInvoiceHtml(
 
   <!-- SIGNATORY -->
   <div class="signatory-section">
-    <div class="signatory-box" style="height: auto; margin-bottom: 2pt;">
-      <img src="${signatureBase64}" alt="Signature" style="height: 45pt; width: auto; display: block; margin-bottom: -8pt;" />
+    <div class="signatory-box" style="height: auto; margin-bottom: 2pt; display: flex; flex-direction: column; align-items: center; width: 180pt;">
+      <img src="${signatureBase64}" alt="Signature" style="height: 40pt; width: auto; display: block; margin-bottom: -4pt;" />
+      <div class="signatory-label" style="width: 100%;">Accounts and Business Development</div>
+      <img src="${stampBase64}" alt="Stamp" style="height: 60pt; width: auto; display: block; margin-top: 4pt;" />
     </div>
-    <div class="signatory-label">Authorised Signatory</div>
   </div>
 
   <!-- TERMS AND CONDITIONS -->

@@ -267,10 +267,10 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
         }}>
         <div
           style={{
-            height: "45px",
             display: "flex",
-            alignItems: "flex-end",
-            marginBottom: "4px",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "220px",
           }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -280,20 +280,31 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
               height: "45px",
               width: "auto",
               display: "block",
-              marginBottom: "-8px",
+              marginBottom: "-4px",
             }}
           />
-        </div>
-        <div
-          style={{
-            fontSize: "8pt",
-            color: "#333",
-            borderTop: "1px solid #333",
-            paddingTop: "4px",
-            width: "180px",
-            textAlign: "center",
-          }}>
-          Authorised Signatory
+          <div
+            style={{
+              fontSize: "8pt",
+              color: "#333",
+              borderTop: "1px solid #333",
+              paddingTop: "4px",
+              width: "100%",
+              textAlign: "center",
+            }}>
+            Accounts and Business Development
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/stamp.png"
+            alt="Stamp"
+            style={{
+              height: "65px",
+              width: "auto",
+              display: "block",
+              marginTop: "6px",
+            }}
+          />
         </div>
       </div>
     </div>
