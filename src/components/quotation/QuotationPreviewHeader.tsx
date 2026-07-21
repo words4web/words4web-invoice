@@ -16,7 +16,7 @@ export function QuotationPreviewHeader({ data }: QuotationPreviewProps) {
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "24pt",
             fontWeight: 700,
-            color: "#8C52FF",
+            color: "#000",
             marginBottom: "0px",
             letterSpacing: "0.5px",
             textTransform: "uppercase",

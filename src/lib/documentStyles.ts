@@ -59,7 +59,7 @@ export const DOCUMENT_CSS = `
   }
 
   .quotation-doc .doc-title {
-    color: #8C52FF;
+    color: #000;
   }
 
   .doc-meta table {
