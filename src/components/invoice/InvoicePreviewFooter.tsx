@@ -123,10 +123,13 @@ export function InvoicePreviewFooter({ data }: InvoicePreviewProps) {
             }}>
             <MapPinIcon width="12" height="12" stroke="#fff" />
           </div>
-          <div style={{ lineHeight: "1.35", fontWeight: "600" }}>
-            5037, SSRF, Near City Center Mall,
-            <br />
-            Lavate Nagar, Nashik 422002
+          <div
+            style={{
+              lineHeight: "1.35",
+              fontWeight: "600",
+              whiteSpace: "pre-wrap",
+            }}>
+            {data?.ownerAddress || COMPANY?.address}
           </div>
         </div>
       </div>

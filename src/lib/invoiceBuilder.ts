@@ -228,8 +228,7 @@ export function buildInvoiceHtml(
         ${RAW_SVG_ICONS.mapPin}
       </div>
       <div class="footer-text">
-        5037, SSRF, Near City Center Mall,<br>
-        Lavate Nagar, Nashik 422002
+        ${ownerAddressLines}
       </div>
     </div>
   </div>
