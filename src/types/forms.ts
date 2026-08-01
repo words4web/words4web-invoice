@@ -51,6 +51,8 @@ export interface GeneratorHeaderProps {
   onPrint: () => void;
   printing: boolean;
   accentClass?: string;
+  onSave?: () => void;
+  saveStatus?: "idle" | "saved";
 }
 
 export interface FormInputProps extends Omit<

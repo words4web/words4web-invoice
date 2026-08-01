@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { COMPANY } from "@/data/company";
 import { QuotationData, QuotationLineItem } from "@/types/quotation";
@@ -20,6 +20,7 @@ import { QuotationItemRowForm } from "@/components/quotation/QuotationItemRowFor
 import { useDocumentEditor } from "@/hooks/useDocumentEditor";
 import { MobileTabBar } from "@/components/MobileTabBar";
 import { Tab } from "@/types/forms";
+import { getDocumentById, saveDocument } from "@/utils/storage";
 
 import { DEFAULT_DATA } from "@/data/quotation";
 
@@ -27,9 +28,11 @@ function QuotationPageClient() {
   const previewRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<Tab>("form");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saved">("idle");
 
   const {
     data,
+    setData,
     printing,
     setField,
     setItem,
@@ -42,6 +45,52 @@ function QuotationPageClient() {
     buildQuotationHtml,
     "/logo_purple.png",
   );
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    if (id) {
+      const doc = getDocumentById(id);
+      if (doc && doc?.type === "quotation") {
+        requestAnimationFrame(() => {
+          setData(doc?.data as QuotationData);
+        });
+      }
+    }
+  }, [setData]);
+
+  const handleSave = () => {
+    const totals = calcQuotationTotal(data?.items, data?.currency);
+    const numericTotal = totals?.total;
+
+    const docId = data?.id || crypto.randomUUID();
+    const updatedData = { ...data, id: docId };
+
+    setData(updatedData);
+
+    saveDocument({
+      id: docId,
+      type: "quotation",
+      number: updatedData?.quotationNo || "Untitled Quotation",
+      clientAddress: updatedData?.clientAddress || "",
+      date: updatedData?.date || "",
+      amount: totals?.fmtTotal,
+      currency: updatedData?.currency || "INR",
+      data: updatedData,
+    });
+
+    const newUrl = `${window.location.pathname}?id=${docId}`;
+    window.history.replaceState(
+      { ...window.history.state, as: newUrl, url: newUrl },
+      "",
+      newUrl,
+    );
+
+    setSaveStatus("saved");
+    setTimeout(() => {
+      setSaveStatus("idle");
+    }, 2000);
+  };
 
   const totals = calcQuotationTotal(data.items, data.currency);
 
@@ -59,6 +108,8 @@ function QuotationPageClient() {
         onPrint={handlePrint}
         printing={printing}
         accentClass="bg-[#8C52FF] hover:bg-[#723df7]"
+        onSave={handleSave}
+        saveStatus={saveStatus}
       />
       <MobileTabBar activeTab={activeTab} onTabChange={setActiveTab} />
 

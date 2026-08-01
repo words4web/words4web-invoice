@@ -7,6 +7,7 @@ export interface QuotationLineItem {
 }
 
 export interface QuotationData {
+  id?: string;
   quotationNo: string;
   date: string;
   validTillDate: string;

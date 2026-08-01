@@ -6,6 +6,8 @@ export function GeneratorHeader({
   onPrint,
   printing,
   accentClass = "bg-[#0052cc] hover:bg-[#0747a6]",
+  onSave,
+  saveStatus,
 }: GeneratorHeaderProps) {
   const router = useRouter();
 
@@ -15,7 +17,7 @@ export function GeneratorHeader({
         <button
           onClick={() => router.push("/")}
           className="text-sm text-gray-500 hover:text-gray-800 flex items-center gap-1 cursor-pointer shrink-0">
-          ← Back
+          ← Back to Dashboard
         </button>
         <span className="text-sm font-bold text-gray-800 truncate">
           {title}
@@ -25,15 +27,31 @@ export function GeneratorHeader({
           settings for a clean PDF.
         </span>
       </div>
-      <button
-        onClick={onPrint}
-        disabled={printing}
-        className={`shrink-0 px-3 sm:px-5 py-2 disabled:opacity-60 text-white text-sm font-bold rounded-lg transition-colors shadow cursor-pointer ${accentClass}`}>
-        <span className="hidden sm:inline">
-          {printing ? "Opening Print..." : "Generate PDF"}
-        </span>
-        <span className="sm:hidden">{printing ? "⏳" : "🖨️ PDF"}</span>
-      </button>
+      <div className="flex items-center gap-2">
+        {onSave && (
+          <button
+            onClick={onSave}
+            className="shrink-0 px-3 sm:px-4 py-2 border border-gray-300 hover:border-gray-400 bg-white hover:bg-gray-50 text-gray-700 text-sm font-bold rounded-lg transition-colors cursor-pointer flex items-center gap-1">
+            {saveStatus === "saved" ? (
+              <>
+                <span className="text-green-600">✓</span>
+                <span>Saved</span>
+              </>
+            ) : (
+              <span>Save Draft</span>
+            )}
+          </button>
+        )}
+        <button
+          onClick={onPrint}
+          disabled={printing}
+          className={`shrink-0 px-3 sm:px-5 py-2 disabled:opacity-60 text-white text-sm font-bold rounded-lg transition-colors shadow cursor-pointer ${accentClass}`}>
+          <span className="hidden sm:inline">
+            {printing ? "Opening Print..." : "Generate PDF"}
+          </span>
+          <span className="sm:hidden">{printing ? "⏳" : "🖨️ PDF"}</span>
+        </button>
+      </div>
     </header>
   );
 }

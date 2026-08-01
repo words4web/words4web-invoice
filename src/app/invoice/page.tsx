@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { COMPANY } from "@/data/company";
 import { InvoiceData, InvoiceLineItem } from "@/types/invoice";
@@ -20,6 +20,7 @@ import { InvoiceItemRowForm } from "@/components/invoice/InvoiceItemRowForm";
 import { useDocumentEditor } from "@/hooks/useDocumentEditor";
 import { MobileTabBar } from "@/components/MobileTabBar";
 import { Tab } from "@/types/forms";
+import { getDocumentById, saveDocument } from "@/utils/storage";
 
 import { DEFAULT_DATA } from "@/data/invoice";
 
@@ -27,9 +28,11 @@ function InvoicePageClient() {
   const previewRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<Tab>("form");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saved">("idle");
 
   const {
     data,
+    setData,
     printing,
     setField,
     setItem,
@@ -41,6 +44,52 @@ function InvoicePageClient() {
     () => ({ description: "", gstRate: "0", qty: "1", rate: "0" }),
     buildInvoiceHtml,
   );
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    if (id) {
+      const doc = getDocumentById(id);
+      if (doc && doc.type === "invoice") {
+        requestAnimationFrame(() => {
+          setData(doc.data as InvoiceData);
+        });
+      }
+    }
+  }, [setData]);
+
+  const handleSave = () => {
+    const totals = calcInvoiceTotals(data?.items, data?.currency);
+    const numericTotal = totals.total;
+
+    const docId = data?.id || crypto.randomUUID();
+    const updatedData = { ...data, id: docId };
+
+    setData(updatedData);
+
+    saveDocument({
+      id: docId,
+      type: "invoice",
+      number: updatedData?.invoiceNo || "Untitled Invoice",
+      clientAddress: updatedData?.clientAddress || "",
+      date: updatedData?.date || "",
+      amount: totals.fmtTotal,
+      currency: updatedData?.currency || "INR",
+      data: updatedData,
+    });
+
+    const newUrl = `${window.location.pathname}?id=${docId}`;
+    window.history.replaceState(
+      { ...window.history.state, as: newUrl, url: newUrl },
+      "",
+      newUrl,
+    );
+
+    setSaveStatus("saved");
+    setTimeout(() => {
+      setSaveStatus("idle");
+    }, 2000);
+  };
 
   const totals = calcInvoiceTotals(data.items, data.currency);
 
@@ -58,6 +107,8 @@ function InvoicePageClient() {
         onPrint={handlePrint}
         printing={printing}
         accentClass="bg-[#7A0000] hover:bg-[#5c0000]"
+        onSave={handleSave}
+        saveStatus={saveStatus}
       />
       <MobileTabBar activeTab={activeTab} onTabChange={setActiveTab} />
 
