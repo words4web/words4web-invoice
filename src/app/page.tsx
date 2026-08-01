@@ -44,12 +44,9 @@ export default function Home() {
             width={180}
             height={45}
             priority
-            className="h-auto w-[150px] md:w-[180px]"
+            className="w-[150px] md:w-[180px]"
+            style={{ height: "auto" }}
           />
-          <div className="h-6 w-px bg-gray-300 hidden md:block"></div>
-          <span className="text-gray-500 font-medium text-sm hidden md:block">
-            Document Management Dashboard
-          </span>
         </div>
         <div className="flex items-center gap-3">
           <button
