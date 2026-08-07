@@ -24,6 +24,7 @@ export interface QuotationData {
   accountType: string;
   upiId: string;
   qrCode?: string;
+  paypalId?: string;
 
   // Terms & Conditions / Additional Notes
   additionalNotes: string;

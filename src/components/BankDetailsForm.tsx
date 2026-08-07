@@ -9,6 +9,7 @@ export function BankDetailsForm({
   accountType,
   upiId,
   qrCode,
+  paypalId = "",
   onChangeField,
 }: BankDetailsFormProps) {
   return (
@@ -52,6 +53,12 @@ export function BankDetailsForm({
           placeholder="e.g. 9765050101-2@ybl"
           value={upiId}
           onChange={(val) => onChangeField("upiId", val)}
+        />
+        <FormInput
+          label="PayPal ID"
+          placeholder="e.g. payments@words4web.com"
+          value={paypalId}
+          onChange={(val) => onChangeField("paypalId", val)}
         />
         {/*
         <div>

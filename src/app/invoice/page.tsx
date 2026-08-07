@@ -242,6 +242,7 @@ function InvoicePageClient() {
               accountType={data.accountType}
               upiId={data.upiId}
               qrCode={data.qrCode}
+              paypalId={data.paypalId}
               onChangeField={(field, val) => setField(field, val)}
             />
 

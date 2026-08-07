@@ -24,6 +24,7 @@ export interface InvoiceData {
   accountType: string;
   upiId: string;
   qrCode?: string;
+  paypalId?: string;
 
   // Terms & Conditions
   termsAndConditions: string;

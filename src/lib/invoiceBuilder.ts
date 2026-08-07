@@ -167,6 +167,16 @@ export function buildInvoiceHtml(
         <tr><td>Account Type</td><td>${data.accountType || COMPANY.accountType}</td></tr>
         <tr><td>Bank</td><td>${data.bank || COMPANY.bank}</td></tr>
       </table>
+      ${
+        data.paypalId
+          ? `
+      <div style="margin-top: 12px; padding: 4px 8px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; display: flex; align-items: center; gap: 8px; width: 240px;">
+        ${RAW_SVG_ICONS.paypal}
+        <span style="color: #111; font-weight: 600; word-break: break-all;">${data.paypalId}</span>
+      </div>
+      `
+          : ""
+      }
     </div>
 
     <!-- Totals -->

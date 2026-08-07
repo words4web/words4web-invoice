@@ -1,6 +1,7 @@
 import { QuotationPreviewProps } from "@/types/quotation";
 import { calcQuotationTotal } from "@/utils/quotation";
 import { COMPANY } from "@/data/company";
+import { PaypalIcon } from "@/data/icons";
 
 export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
   const totals = calcQuotationTotal(data?.items, data?.currency);
@@ -103,6 +104,32 @@ export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
               </tr>
             </tbody>
           </table>
+          {data.paypalId && (
+            <div
+              style={{
+                marginTop: "12px",
+                padding: "4px 8px",
+                background: "#f9fafb",
+                border: "1px solid #e5e7eb",
+                borderRadius: "6px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                width: "230px",
+              }}>
+              <PaypalIcon
+                style={{ height: "30px", width: "auto", flexShrink: 0 }}
+              />
+              <span
+                style={{
+                  color: "#111",
+                  fontWeight: "600",
+                  wordBreak: "break-all",
+                }}>
+                {data.paypalId}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* UPI Scan */}

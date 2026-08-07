@@ -17,6 +17,7 @@ export interface BankDetailsFormProps {
   accountType: string;
   upiId: string;
   qrCode?: string;
+  paypalId?: string;
   onChangeField: (
     field:
       | "bank"
@@ -25,7 +26,8 @@ export interface BankDetailsFormProps {
       | "ifsc"
       | "accountType"
       | "upiId"
-      | "qrCode",
+      | "qrCode"
+      | "paypalId",
     value: string,
   ) => void;
 }
@@ -59,7 +61,7 @@ export interface FormInputProps extends Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "onChange"
 > {
-  label: string;
+  label: React.ReactNode;
   onChange: (value: string) => void;
 }
 
@@ -67,7 +69,7 @@ export interface FormTextareaProps extends Omit<
   React.TextareaHTMLAttributes<HTMLTextAreaElement>,
   "onChange"
 > {
-  label: string;
+  label: React.ReactNode;
   onChange: (value: string) => void;
 }
 

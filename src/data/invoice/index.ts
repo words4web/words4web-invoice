@@ -25,6 +25,7 @@ export const DEFAULT_DATA: InvoiceData = {
   ifsc: COMPANY.ifsc,
   accountType: COMPANY.accountType,
   upiId: COMPANY.upiId,
+  paypalId: "contentbypri@gmail.com",
   termsAndConditions:
     "1. Please pay within 7 days from the date of invoice.\n2. Please quote invoice number when remitting funds.",
   ownerAddress: COMPANY.address,

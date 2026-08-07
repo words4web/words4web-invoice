@@ -21,6 +21,7 @@ export const DEFAULT_DATA: QuotationData = {
   ifsc: COMPANY.ifsc,
   accountType: COMPANY.accountType,
   upiId: COMPANY.upiId,
+  paypalId: "contentbypri@gmail.com",
   additionalNotes:
     "If you agree with this quotation kindly send a signed acceptance on the shared attachment and the date of commencement of the services, which is from May 2026.",
   ownerAddress: COMPANY.address,
