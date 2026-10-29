@@ -3,7 +3,7 @@ import { InvoiceLineItem } from "@/types/invoice";
 /** Compute subtotal, IGST/VAT, and total from line items using GST columns */
 export function calcInvoiceTotals(
   items: InvoiceLineItem[],
-  currency: "INR" | "EUR" | "GBP" = "INR",
+  currency: "INR" | "EUR" | "GBP" | "MYR" = "INR",
 ) {
   let subtotal = 0;
   let gst = 0;
@@ -36,12 +36,14 @@ export function calcInvoiceTotals(
     INR: "₹",
     EUR: "€",
     GBP: "£",
+    MYR: "RM",
   };
 
   const currencyLocales = {
     INR: "en-IN",
     EUR: "en-IE",
     GBP: "en-GB",
+    MYR: "en-MY",
   };
 
   const symbol = currencySymbols[currency] || "₹";

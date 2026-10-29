@@ -8,7 +8,7 @@ export interface SavedDocument {
   clientAddress: string;
   date: string;
   amount: string;
-  currency: "INR" | "EUR" | "GBP";
+  currency: "INR" | "EUR" | "GBP" | "MYR";
   data: InvoiceData | QuotationData;
   updatedAt: number;
 }

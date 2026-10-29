@@ -14,7 +14,7 @@ export interface QuotationData {
   clientAddress: string;
   countryOfSupply: string;
   items: QuotationLineItem[];
-  currency?: "INR" | "EUR" | "GBP";
+  currency?: "INR" | "EUR" | "GBP" | "MYR";
 
   // Bank details
   bank: string;
@@ -42,5 +42,5 @@ export interface QuotationPreviewProps {
 
 export interface QuotationPreviewTableProps {
   items: QuotationLineItem[];
-  currency?: "INR" | "EUR" | "GBP";
+  currency?: "INR" | "EUR" | "GBP" | "MYR";
 }

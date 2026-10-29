@@ -103,7 +103,7 @@ export function QuotationPreviewHeader({ data }: QuotationPreviewProps) {
       <div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/logo_purple.png"
+          src="/Words4Web-logo.png"
           alt={COMPANY.name}
           style={{ height: "120px", width: "auto", display: "block" }}
         />

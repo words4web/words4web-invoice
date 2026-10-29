@@ -3,7 +3,7 @@ import { QuotationLineItem } from "@/types/quotation";
 /** Compute subtotal, IGST/VAT, and total from quotation line items */
 export function calcQuotationTotal(
   items: QuotationLineItem[],
-  currency: "INR" | "EUR" | "GBP" = "INR",
+  currency: "INR" | "EUR" | "GBP" | "MYR" = "INR",
 ) {
   let subtotal = 0;
   let gst = 0;
@@ -36,12 +36,14 @@ export function calcQuotationTotal(
     INR: "₹",
     EUR: "€",
     GBP: "£",
+    MYR: "RM",
   };
 
   const currencyLocales = {
     INR: "en-IN",
     EUR: "en-IE",
     GBP: "en-GB",
+    MYR: "en-MY",
   };
 
   const symbol = currencySymbols[currency] || "₹";

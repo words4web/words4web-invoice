@@ -18,20 +18,23 @@ export function buildInvoiceHtml(
     (i) => i?.description || i?.qty || i?.rate,
   );
 
-  const isVat = currency !== "INR";
-  const taxHeader1 = isVat ? "VAT %" : "GST";
-  const taxHeader2 = isVat ? "VAT" : "IGST";
-  const taxSummaryLabel = isVat ? "VAT" : "TAX";
+  const isVat = currency === "EUR" || currency === "GBP";
+  const isSst = currency === "MYR";
+  const taxHeader1 = isSst ? "SST %" : isVat ? "VAT %" : "GST";
+  const taxHeader2 = isSst ? "SST" : isVat ? "VAT" : "IGST";
+  const taxSummaryLabel = isSst ? "SST" : isVat ? "VAT" : "TAX";
 
   const currencySymbols = {
     INR: "₹",
     EUR: "€",
     GBP: "£",
+    MYR: "RM",
   };
   const currencyLocales = {
     INR: "en-IN",
     EUR: "en-IE",
     GBP: "en-GB",
+    MYR: "en-MY",
   };
 
   const symbol = currencySymbols[currency] || "₹";

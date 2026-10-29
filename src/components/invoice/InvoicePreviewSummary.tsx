@@ -242,7 +242,11 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
                     color: "#555",
                     fontSize: "8.5pt",
                   }}>
-                  {data.currency && data.currency !== "INR" ? "VAT" : "TAX"}
+                  {data.currency === "MYR"
+                    ? "SST"
+                    : data.currency && data.currency !== "INR"
+                      ? "VAT"
+                      : "TAX"}
                 </td>
                 <td
                   style={{

@@ -43,7 +43,7 @@ function QuotationPageClient() {
     DEFAULT_DATA,
     () => ({ description: "", gstRate: "0", qty: "1", rate: "0" }),
     buildQuotationHtml,
-    "/logo_purple.png",
+    "/Words4Web-logo.png",
   );
 
   useEffect(() => {
@@ -98,6 +98,7 @@ function QuotationPageClient() {
     INR: "₹",
     EUR: "€",
     GBP: "£",
+    MYR: "RM",
   };
   const currentSymbol = currencySymbols[data.currency || "INR"] || "₹";
 
@@ -128,13 +129,14 @@ function QuotationPageClient() {
                   onChange={(e) =>
                     setField(
                       "currency",
-                      e.target.value as "INR" | "EUR" | "GBP",
+                      e.target.value as "INR" | "EUR" | "GBP" | "MYR",
                     )
                   }
                   className="w-full bg-white border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#7A0000] text-gray-800 cursor-pointer font-medium mt-1.5">
                   <option value="INR">INR (₹) / GST Mode</option>
                   <option value="EUR">EUR (€) / VAT Mode</option>
                   <option value="GBP">GBP (£) / VAT Mode</option>
+                  <option value="MYR">MYR (RM) / SST Mode</option>
                 </select>
               </div>
             </section>

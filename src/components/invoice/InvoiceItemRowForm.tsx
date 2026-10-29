@@ -9,13 +9,19 @@ export function InvoiceItemRowForm({
   onChangeField,
   currency = "INR",
 }: InvoiceItemRowFormProps) {
-  const isVat = currency !== "INR";
-  const taxLabel = isVat ? "VAT Rate (%)" : "GST Rate (%)";
+  const isVat = currency === "EUR" || currency === "GBP";
+  const isSst = currency === "MYR";
+  const taxLabel = isSst
+    ? "SST Rate (%)"
+    : isVat
+      ? "VAT Rate (%)"
+      : "GST Rate (%)";
 
   const currencySymbols = {
     INR: "₹",
     EUR: "€",
     GBP: "£",
+    MYR: "RM",
   };
   const symbol = currencySymbols[currency] || "₹";
   const rateLabel = `Rate (${symbol})`;
