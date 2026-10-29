@@ -274,7 +274,8 @@ export const DOCUMENT_CSS = `
   }
 
   .summary-totals {
-    width: 30%;
+    min-width: 170pt;
+    width: auto;
   }
 
   .totals-table {
@@ -294,11 +295,13 @@ export const DOCUMENT_CSS = `
     font-weight: 600;
     text-align: left;
     color: #555;
+    white-space: nowrap;
+    padding-right: 10pt;
   }
 
   .totals-table tr td:last-child {
     text-align: right;
-    width: 80pt;
+    width: auto;
     white-space: nowrap;
     font-weight: bold;
     color: #111;

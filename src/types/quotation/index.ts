@@ -15,6 +15,7 @@ export interface QuotationData {
   countryOfSupply: string;
   items: QuotationLineItem[];
   currency?: "INR" | "EUR" | "GBP" | "MYR";
+  durationMonths?: number;
 
   // Bank details
   bank: string;

@@ -15,6 +15,7 @@ export interface InvoiceData {
   countryOfSupply: string;
   items: InvoiceLineItem[];
   currency?: "INR" | "EUR" | "GBP" | "MYR";
+  durationMonths?: number;
 
   // Bank details
   bank: string;

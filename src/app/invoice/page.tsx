@@ -91,7 +91,11 @@ function InvoicePageClient() {
     }, 2000);
   };
 
-  const totals = calcInvoiceTotals(data.items, data.currency);
+  const totals = calcInvoiceTotals(
+    data.items,
+    data.currency,
+    data.durationMonths,
+  );
 
   const currencySymbols: Record<string, string> = {
     INR: "₹",
@@ -118,7 +122,7 @@ function InvoicePageClient() {
         <aside
           className={`bg-white border-r border-gray-200 text-gray-800 sm:shrink-0 w-full transition-[width] duration-300 overflow-hidden ${sidebarOpen ? "sm:w-[260px] md:w-[320px] lg:w-[400px]" : "sm:w-0"} ${activeTab === "form" ? "flex flex-col" : "hidden"} sm:flex sm:flex-col`}>
           <div className="flex-1 overflow-y-auto p-5 space-y-5 min-w-[260px] md:min-w-[320px] lg:min-w-[400px]">
-            <section className="bg-gray-50 border border-gray-150 rounded-lg p-3">
+            <section className="bg-gray-50 border border-gray-150 rounded-lg p-3 space-y-3">
               <div className="flex flex-col space-y-1">
                 <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">
                   Document Currency
@@ -131,12 +135,62 @@ function InvoicePageClient() {
                       e.target.value as "INR" | "EUR" | "GBP" | "MYR",
                     )
                   }
-                  className="w-full bg-white border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#7A0000] text-gray-800 cursor-pointer font-medium mt-1.5">
+                  className="w-full bg-white border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#7A0000] text-gray-800 cursor-pointer font-medium mt-1">
                   <option value="INR">INR (₹) / GST Mode</option>
                   <option value="EUR">EUR (€) / VAT Mode</option>
                   <option value="GBP">GBP (£) / VAT Mode</option>
                   <option value="MYR">MYR (RM) / SST Mode</option>
                 </select>
+              </div>
+
+              <div className="flex flex-col space-y-1 pt-1 border-t border-gray-200/60">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+                    Billing Duration (Months)
+                  </label>
+                  <span className="text-[11px] font-semibold text-[#7A0000] bg-red-50 px-2 py-0.5 rounded">
+                    ×{data.durationMonths || 1}{" "}
+                    {Number(data.durationMonths || 1) === 1
+                      ? "month"
+                      : "months"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 mt-1">
+                  <input
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="1"
+                    value={data.durationMonths ?? 1}
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value, 10);
+                      setField(
+                        "durationMonths",
+                        isNaN(val) || val < 1 ? 1 : val,
+                      );
+                    }}
+                    className="w-24 bg-white border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#7A0000] text-gray-900 font-semibold"
+                  />
+                  <div className="flex gap-1">
+                    {[1, 3, 6, 12].map((preset) => (
+                      <button
+                        key={preset}
+                        type="button"
+                        onClick={() => setField("durationMonths", preset)}
+                        className={`px-2.5 py-1.5 text-xs font-semibold rounded-md border transition-colors cursor-pointer ${
+                          (data.durationMonths || 1) === preset
+                            ? "bg-[#7A0000] text-white border-[#7A0000]"
+                            : "bg-white text-gray-600 border-gray-200 hover:bg-gray-100"
+                        }`}>
+                        {preset}M
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-[11px] text-gray-400 mt-0.5">
+                  Multiplies monthly rates by any custom number of months (1, 2,
+                  3, 4, 5, 6...).
+                </p>
               </div>
             </section>
 

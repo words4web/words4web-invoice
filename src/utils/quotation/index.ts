@@ -1,13 +1,16 @@
 import { QuotationLineItem } from "@/types/quotation";
 
-/** Compute subtotal, IGST/VAT, and total from quotation line items */
+/** Compute subtotal, IGST/VAT, and total from quotation line items, factoring in duration in months */
 export function calcQuotationTotal(
   items: QuotationLineItem[],
   currency: "INR" | "EUR" | "GBP" | "MYR" = "INR",
+  durationMonths: number = 1,
 ) {
-  let subtotal = 0;
-  let gst = 0;
-  let total = 0;
+  const months = Math.max(1, Number(durationMonths) || 1);
+
+  let monthlySubtotal = 0;
+  let monthlyGst = 0;
+  let monthlyTotal = 0;
 
   const processedItems = (items || [])?.map((item) => {
     const qty = parseFloat(item?.qty) || 0;
@@ -21,9 +24,9 @@ export function calcQuotationTotal(
     const igst = amount * (gstRatePercent / 100);
     const itemTotal = amount + igst;
 
-    subtotal += amount;
-    gst += igst;
-    total += itemTotal;
+    monthlySubtotal += amount;
+    monthlyGst += igst;
+    monthlyTotal += itemTotal;
 
     return {
       amount,
@@ -31,6 +34,10 @@ export function calcQuotationTotal(
       total: itemTotal,
     };
   });
+
+  const subtotal = monthlySubtotal * months;
+  const gst = monthlyGst * months;
+  const total = monthlyTotal * months;
 
   const currencySymbols = {
     INR: "₹",
@@ -76,6 +83,14 @@ export function calcQuotationTotal(
   };
 
   return {
+    months,
+    monthlySubtotal,
+    monthlyVat: monthlyGst,
+    monthlyTotal,
+    fmtMonthlySubtotal: fmt(monthlySubtotal),
+    fmtMonthlyVat: fmt(monthlyGst),
+    fmtMonthlyTotal: fmt(monthlyTotal),
+
     subtotal,
     vat: gst,
     total,

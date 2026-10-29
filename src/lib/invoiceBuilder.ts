@@ -13,7 +13,7 @@ export function buildInvoiceHtml(
   stampBase64: string,
 ): string {
   const currency = data?.currency || "INR";
-  const totals = calcInvoiceTotals(data?.items, currency);
+  const totals = calcInvoiceTotals(data?.items, currency, data?.durationMonths);
   const itemRows = data?.items?.filter(
     (i) => i?.description || i?.qty || i?.rate,
   );
@@ -112,6 +112,11 @@ export function buildInvoiceHtml(
           <tr><td>Invoice No</td><td>${data.invoiceNo || "—"}</td></tr>
           <tr><td>Invoice Date</td><td>${data.date || "—"}</td></tr>
           <tr><td>Due Date</td><td>${data.dueDate || "—"}</td></tr>
+          ${
+            data.durationMonths && data.durationMonths > 1
+              ? `<tr><td style="color: #7A0000; font-weight: bold;">Duration</td><td style="color: #7A0000; font-weight: bold;">${data.durationMonths} Months</td></tr>`
+              : ""
+          }
         </table>
       </div>
     </div>
@@ -185,8 +190,22 @@ export function buildInvoiceHtml(
     <!-- Totals -->
     <div class="summary-totals">
       <table class="totals-table">
+        ${
+          totals.months > 1
+            ? `
         <tr>
-          <td>SUBTOTAL</td>
+          <td style="color: #6b7280; font-size: 8pt;">MONTHLY TOTAL</td>
+          <td style="color: #4b5563; font-size: 8pt;">${totals.fmtMonthlyTotal} / mo</td>
+        </tr>
+        <tr>
+          <td style="color: #7A0000; font-size: 8pt; border-bottom: 1px dashed #e5e7eb; padding-bottom: 4px;">DURATION</td>
+          <td style="color: #7A0000; font-size: 8pt; border-bottom: 1px dashed #e5e7eb; padding-bottom: 4px;">${totals.months} Months (×${totals.months})</td>
+        </tr>
+        `
+            : ""
+        }
+        <tr>
+          <td>${totals.months > 1 ? `SUBTOTAL (${totals.months}M)` : "SUBTOTAL"}</td>
           <td>${totals.fmtSubtotal}</td>
         </tr>
         <tr>
@@ -194,7 +213,7 @@ export function buildInvoiceHtml(
           <td>${totals.fmtVatWithSym}</td>
         </tr>
         <tr class="total-row">
-          <td>TOTAL</td>
+          <td>${totals.months > 1 ? "INVOICE TOTAL" : "TOTAL"}</td>
           <td>${totals.fmtTotal}</td>
         </tr>
       </table>

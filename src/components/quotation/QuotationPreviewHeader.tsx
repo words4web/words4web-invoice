@@ -97,6 +97,30 @@ export function QuotationPreviewHeader({ data }: QuotationPreviewProps) {
                 {data?.validTillDate || "—"}
               </td>
             </tr>
+            {data?.durationMonths && data.durationMonths > 1 ? (
+              <tr>
+                <td
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontWeight: 600,
+                    padding: "0 0",
+                    lineHeight: "1.5",
+                    textAlign: "left",
+                    color: "#8C52FF",
+                  }}>
+                  Duration
+                </td>
+                <td
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontWeight: 700,
+                    padding: "1px 6px",
+                    color: "#8C52FF",
+                  }}>
+                  {data.durationMonths} Months
+                </td>
+              </tr>
+            ) : null}
           </tbody>
         </table>
       </div>

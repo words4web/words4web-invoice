@@ -4,7 +4,11 @@ import { COMPANY } from "@/data/company";
 import { PaypalIcon } from "@/data/icons";
 
 export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
-  const totals = calcQuotationTotal(data?.items, data?.currency);
+  const totals = calcQuotationTotal(
+    data?.items,
+    data?.currency,
+    data?.durationMonths,
+  );
   const stampPath = data?.currency === "INR" ? "/stamp.png" : "/uk_stamp.png";
 
   return (
@@ -203,29 +207,87 @@ export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
         {/* Totals */}
         <div
           style={{
-            width: "30%",
+            minWidth: "220px",
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-end",
           }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <tbody>
+              {totals.months > 1 && (
+                <>
+                  <tr>
+                    <td
+                      style={{
+                        padding: "3px 12px 3px 0",
+                        fontWeight: "bold",
+                        textAlign: "left",
+                        color: "#6b7280",
+                        fontSize: "8pt",
+                        whiteSpace: "nowrap",
+                      }}>
+                      MONTHLY TOTAL
+                    </td>
+                    <td
+                      style={{
+                        padding: "3px 0",
+                        textAlign: "right",
+                        whiteSpace: "nowrap",
+                        fontWeight: "bold",
+                        color: "#4b5563",
+                        fontSize: "8pt",
+                      }}>
+                      {totals.fmtMonthlyTotal} / mo
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style={{
+                        padding: "3px 12px 6px 0",
+                        fontWeight: "bold",
+                        textAlign: "left",
+                        color: "#8C52FF",
+                        fontSize: "8pt",
+                        whiteSpace: "nowrap",
+                        borderBottom: "1px dashed #e5e7eb",
+                      }}>
+                      DURATION
+                    </td>
+                    <td
+                      style={{
+                        padding: "3px 0 6px 0",
+                        textAlign: "right",
+                        whiteSpace: "nowrap",
+                        fontWeight: "bold",
+                        color: "#8C52FF",
+                        fontSize: "8pt",
+                        borderBottom: "1px dashed #e5e7eb",
+                      }}>
+                      {totals.months} Months (×{totals.months})
+                    </td>
+                  </tr>
+                </>
+              )}
               <tr>
                 <td
                   style={{
-                    padding: "4px 0",
+                    padding:
+                      totals.months > 1 ? "6px 12px 4px 0" : "4px 12px 4px 0",
                     fontWeight: "bold",
                     textAlign: "left",
                     color: "#555",
                     fontSize: "8.5pt",
+                    whiteSpace: "nowrap",
                   }}>
-                  SUBTOTAL
+                  {totals.months > 1
+                    ? `SUBTOTAL (${totals.months}M)`
+                    : "SUBTOTAL"}
                 </td>
                 <td
                   style={{
-                    padding: "4px 0",
+                    padding: totals.months > 1 ? "6px 0 4px 0" : "4px 0",
                     textAlign: "right",
-                    width: "110px",
+                    whiteSpace: "nowrap",
                     fontWeight: "bold",
                     color: "#111",
                     fontSize: "8.5pt",
@@ -236,11 +298,12 @@ export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
               <tr>
                 <td
                   style={{
-                    padding: "4px 0",
+                    padding: "4px 12px 4px 0",
                     fontWeight: "bold",
                     textAlign: "left",
                     color: "#555",
                     fontSize: "8.5pt",
+                    whiteSpace: "nowrap",
                   }}>
                   {data.currency === "MYR"
                     ? "SST"
@@ -252,7 +315,7 @@ export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
                   style={{
                     padding: "4px 0",
                     textAlign: "right",
-                    width: "110px",
+                    whiteSpace: "nowrap",
                     fontWeight: "bold",
                     color: "#111",
                     fontSize: "8.5pt",
@@ -263,19 +326,20 @@ export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
               <tr style={{ color: "#111" }}>
                 <td
                   style={{
-                    padding: "6px 0",
+                    padding: "6px 12px 6px 0",
                     fontWeight: "bold",
                     textAlign: "left",
                     fontSize: "10pt",
+                    whiteSpace: "nowrap",
                     borderTop: "1px solid #111",
                   }}>
-                  TOTAL
+                  {totals.months > 1 ? "CONTRACT TOTAL" : "TOTAL"}
                 </td>
                 <td
                   style={{
                     padding: "6px 0",
                     textAlign: "right",
-                    width: "110px",
+                    whiteSpace: "nowrap",
                     fontWeight: "bold",
                     fontSize: "10pt",
                     borderTop: "1px solid #111",
