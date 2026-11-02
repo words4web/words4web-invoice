@@ -6,6 +6,11 @@ export interface QuotationLineItem {
   isNegative?: boolean;
 }
 
+export interface RateCardItem {
+  particular: string;
+  rate: string;
+}
+
 export interface QuotationData {
   id?: string;
   quotationNo: string;
@@ -16,6 +21,11 @@ export interface QuotationData {
   items: QuotationLineItem[];
   currency?: "INR" | "EUR" | "GBP" | "MYR";
   durationMonths?: number;
+
+  showRateCard?: boolean;
+  rateCardTitle?: string;
+  rateCardNote?: string;
+  rateCardItems?: RateCardItem[];
 
   // Bank details
   bank: string;

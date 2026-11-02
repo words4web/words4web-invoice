@@ -144,6 +144,8 @@ export function QuotationPreviewTable({
                   padding: "6px 6px",
                   verticalAlign: "middle",
                   whiteSpace: "pre-wrap",
+                  wordBreak: "break-word",
+                  overflowWrap: "anywhere",
                   textAlign: "left",
                   color: "#111",
                   fontWeight: "normal",

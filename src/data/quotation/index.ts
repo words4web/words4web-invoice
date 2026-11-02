@@ -6,6 +6,21 @@ export const DEFAULT_ITEMS: QuotationLineItem[] = [
   { description: "Website Creation", gstRate: "0", qty: "1", rate: "45000" },
 ];
 
+export const DEFAULT_RATE_CARD_ITEMS = [
+  {
+    particular: "Text information only / round",
+    rate: "1450",
+  },
+  {
+    particular: "Design adjustments (colour, placement etc.) / round",
+    rate: "2200",
+  },
+  {
+    particular: "3D pack shot illustration / visual adapt",
+    rate: "11000",
+  },
+];
+
 export const DEFAULT_DATA: QuotationData = {
   quotationNo: "LC-May-05",
   date: getTodayStr(),
@@ -16,6 +31,11 @@ export const DEFAULT_DATA: QuotationData = {
   items: DEFAULT_ITEMS,
   currency: "INR",
   durationMonths: 1,
+  showRateCard: false,
+  rateCardTitle: "REVISION & ADDITIONAL SCOPE RATE CARD",
+  rateCardNote:
+    "Note 1: Base quote covers up to 3 rounds of changes.\nNote 2: Any changes exceeding the first three rounds will be charged as per the rate card below (subject to applicable taxes):",
+  rateCardItems: DEFAULT_RATE_CARD_ITEMS,
   bank: COMPANY.bank,
   accountName: COMPANY.accountName,
   accountNo: COMPANY.accountNo,

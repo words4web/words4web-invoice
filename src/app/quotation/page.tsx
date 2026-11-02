@@ -17,6 +17,8 @@ import { QuotationPreviewTable } from "@/components/quotation/QuotationPreviewTa
 import { QuotationPreviewFooter } from "@/components/quotation/QuotationPreviewFooter";
 import { QuotationPreviewSummary } from "@/components/quotation/QuotationPreviewSummary";
 import { QuotationItemRowForm } from "@/components/quotation/QuotationItemRowForm";
+import { QuotationPreviewRateCard } from "@/components/quotation/QuotationPreviewRateCard";
+import { RateCardFormSection } from "@/components/quotation/RateCardFormSection";
 import { useDocumentEditor } from "@/hooks/useDocumentEditor";
 import { MobileTabBar } from "@/components/MobileTabBar";
 import { Tab } from "@/types/forms";
@@ -291,6 +293,20 @@ function QuotationPageClient() {
               </div>
             </section>
 
+            <RateCardFormSection
+              showRateCard={data.showRateCard ?? false}
+              rateCardTitle={
+                data.rateCardTitle ?? "REVISION & ADDITIONAL SCOPE RATE CARD"
+              }
+              rateCardNote={data.rateCardNote ?? ""}
+              rateCardItems={data.rateCardItems ?? []}
+              currencySymbol={currentSymbol}
+              onToggle={(show) => setField("showRateCard", show)}
+              onTitleChange={(title) => setField("rateCardTitle", title)}
+              onNoteChange={(note) => setField("rateCardNote", note)}
+              onItemsChange={(items) => setField("rateCardItems", items)}
+            />
+
             <BankDetailsForm
               bank={data.bank}
               accountName={data.accountName}
@@ -376,6 +392,13 @@ function QuotationPageClient() {
             <QuotationPreviewClient data={data} />
             <QuotationPreviewTable
               items={data?.items}
+              currency={data.currency}
+            />
+            <QuotationPreviewRateCard
+              showRateCard={data.showRateCard}
+              rateCardTitle={data.rateCardTitle}
+              rateCardNote={data.rateCardNote}
+              rateCardItems={data.rateCardItems}
               currency={data.currency}
             />
             <QuotationPreviewSummary data={data} />

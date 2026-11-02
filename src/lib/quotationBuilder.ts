@@ -97,6 +97,59 @@ export function buildQuotationHtml(
 
   const docTitle = `Quotation_${data?.quotationNo || "Draft"}${clientClean ? "_" + clientClean : ""}_${timestamp}`;
 
+  const rateCardItems =
+    data.rateCardItems?.filter((item) => item.particular || item.rate) || [];
+
+  const formatRateItem = (raw: string) => {
+    const num = parseFloat(raw);
+    if (isNaN(num)) return raw;
+    return num % 1 === 0
+      ? `${symbol} ${num.toLocaleString(locale, { maximumFractionDigits: 0 })}`
+      : `${symbol} ${num.toLocaleString(locale, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}`;
+  };
+
+  const rateCardHtml =
+    data.showRateCard && (rateCardItems.length > 0 || data.rateCardNote)
+      ? `
+  <!-- REVISION & SCOPE RATE CARD -->
+  <div class="rate-card-section" style="margin-top: 18pt; margin-bottom: 16pt; max-width: 100%; box-sizing: border-box;">
+    <div style="font-family: 'Montserrat', sans-serif; font-size: 8.5pt; font-weight: 700; color: #8C52FF; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 1.5px solid #8C52FF; padding-bottom: 3pt; margin-bottom: 6pt; word-break: break-word; overflow-wrap: anywhere; box-sizing: border-box; max-width: 100%;">
+      ${data.rateCardTitle || "REVISION & ADDITIONAL SCOPE RATE CARD"}
+    </div>
+    ${
+      data.rateCardNote
+        ? `<div style="font-size: 7.5pt; color: #444; line-height: 1.4; margin-bottom: 6pt; font-style: italic; background-color: #fcfaff; border-left: 2.5pt solid #8C52FF; padding: 4pt 6pt; word-break: break-word; overflow-wrap: anywhere; box-sizing: border-box; max-width: 100%;">${data.rateCardNote.trim().replace(/\n/g, "<br>")}</div>`
+        : ""
+    }
+    ${
+      rateCardItems.length > 0
+        ? `<table class="rate-card-table" style="width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 8pt;">
+        <thead>
+          <tr style="background: #f3ebff; border-bottom: 1px solid #8C52FF;">
+            <th style="border: 1px solid #ddd; padding: 4pt 6pt; text-align: left; font-weight: bold; color: #333; font-size: 7.5pt;">PARTICULARS / SCOPE ITEM</th>
+            <th style="border: 1px solid #ddd; padding: 4pt 6pt; text-align: right; font-weight: bold; color: #333; width: 120pt; font-size: 7.5pt;">RATE (${symbol})</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rateCardItems
+            .map(
+              (item, idx) => `
+          <tr style="background: ${idx % 2 === 0 ? "#ffffff" : "#fafafa"};">
+            <td style="border: 1px solid #ddd; padding: 4pt 6pt; text-align: left; color: #222; white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;">${item.particular.replace(/\n/g, "<br>")}</td>
+            <td style="border: 1px solid #ddd; padding: 4pt 6pt; text-align: right; font-weight: bold; color: #111; width: 120pt; word-break: break-word; overflow-wrap: anywhere; box-sizing: border-box;">${formatRateItem(item.rate)}</td>
+          </tr>`,
+            )
+            .join("")}
+        </tbody>
+      </table>`
+        : ""
+    }
+  </div>`
+      : "";
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -166,6 +219,8 @@ export function buildQuotationHtml(
       ${itemRowsHtml}
     </tbody>
   </table>
+
+  ${rateCardHtml}
 
   <!-- SUMMARY SECTION -->
   <div class="summary-section">

@@ -216,6 +216,8 @@ export const DOCUMENT_CSS = `
   .items-table td.desc-cell {
     text-align: left;
     white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
   }
 
   .items-table td.center-cell {
