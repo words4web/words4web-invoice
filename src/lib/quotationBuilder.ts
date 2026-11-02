@@ -24,8 +24,16 @@ export function buildQuotationHtml(
 
   const isVat = currency === "EUR" || currency === "GBP";
   const isSst = currency === "MYR";
+  const isCgstSgst =
+    (!currency || currency === "INR") && data.gstType === "CGST_SGST";
   const taxHeader1 = isSst ? "SST %" : isVat ? "VAT %" : "GST";
-  const taxHeader2 = isSst ? "SST" : isVat ? "VAT" : "IGST";
+  const taxHeader2 = isSst
+    ? "SST"
+    : isVat
+      ? "VAT"
+      : isCgstSgst
+        ? "CGST+SGST"
+        : "IGST";
   const taxSummaryLabel = isSst ? "SST" : isVat ? "VAT" : "TAX";
 
   const currencySymbols = {
@@ -267,10 +275,26 @@ export function buildQuotationHtml(
           <td>${totals.months > 1 ? `SUBTOTAL (${totals.months}M)` : "SUBTOTAL"}</td>
           <td>${totals.fmtSubtotal}</td>
         </tr>
+        ${
+          (!data.currency || data.currency === "INR") &&
+          data.gstType === "CGST_SGST"
+            ? `
+        <tr>
+          <td>CGST</td>
+          <td>${totals.fmtCgst}</td>
+        </tr>
+        <tr>
+          <td>SGST</td>
+          <td>${totals.fmtSgst}</td>
+        </tr>
+        `
+            : `
         <tr>
           <td>${taxSummaryLabel}</td>
           <td>${totals.fmtVatWithSym}</td>
         </tr>
+        `
+        }
         <tr class="total-row">
           <td>${totals.months > 1 ? "CONTRACT TOTAL" : "TOTAL"}</td>
           <td>${totals.fmtTotal}</td>

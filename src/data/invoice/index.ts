@@ -19,6 +19,7 @@ export const DEFAULT_DATA: InvoiceData = {
   countryOfSupply: "India",
   items: DEFAULT_ITEMS,
   currency: "INR",
+  gstType: "IGST",
   durationMonths: 1,
   bank: COMPANY.bank,
   accountName: COMPANY.accountName,

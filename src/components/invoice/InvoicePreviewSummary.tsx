@@ -295,34 +295,88 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
                   {totals.fmtSubtotal}
                 </td>
               </tr>
-              <tr>
-                <td
-                  style={{
-                    padding: "4px 12px 4px 0",
-                    fontWeight: "bold",
-                    textAlign: "left",
-                    color: "#555",
-                    fontSize: "8.5pt",
-                    whiteSpace: "nowrap",
-                  }}>
-                  {data.currency === "MYR"
-                    ? "SST"
-                    : data.currency && data.currency !== "INR"
-                      ? "VAT"
-                      : "TAX"}
-                </td>
-                <td
-                  style={{
-                    padding: "4px 0",
-                    textAlign: "right",
-                    whiteSpace: "nowrap",
-                    fontWeight: "bold",
-                    color: "#111",
-                    fontSize: "8.5pt",
-                  }}>
-                  {totals.fmtVatWithSym}
-                </td>
-              </tr>
+              {(!data.currency || data.currency === "INR") &&
+              data.gstType === "CGST_SGST" ? (
+                <>
+                  <tr>
+                    <td
+                      style={{
+                        padding: "4px 12px 2px 0",
+                        fontWeight: "bold",
+                        textAlign: "left",
+                        color: "#555",
+                        fontSize: "8.5pt",
+                        whiteSpace: "nowrap",
+                      }}>
+                      CGST
+                    </td>
+                    <td
+                      style={{
+                        padding: "4px 0 2px 0",
+                        textAlign: "right",
+                        whiteSpace: "nowrap",
+                        fontWeight: "bold",
+                        color: "#111",
+                        fontSize: "8.5pt",
+                      }}>
+                      {totals.fmtCgst}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style={{
+                        padding: "2px 12px 4px 0",
+                        fontWeight: "bold",
+                        textAlign: "left",
+                        color: "#555",
+                        fontSize: "8.5pt",
+                        whiteSpace: "nowrap",
+                      }}>
+                      SGST
+                    </td>
+                    <td
+                      style={{
+                        padding: "2px 0 4px 0",
+                        textAlign: "right",
+                        whiteSpace: "nowrap",
+                        fontWeight: "bold",
+                        color: "#111",
+                        fontSize: "8.5pt",
+                      }}>
+                      {totals.fmtSgst}
+                    </td>
+                  </tr>
+                </>
+              ) : (
+                <tr>
+                  <td
+                    style={{
+                      padding: "4px 12px 4px 0",
+                      fontWeight: "bold",
+                      textAlign: "left",
+                      color: "#555",
+                      fontSize: "8.5pt",
+                      whiteSpace: "nowrap",
+                    }}>
+                    {data.currency === "MYR"
+                      ? "SST"
+                      : data.currency && data.currency !== "INR"
+                        ? "VAT"
+                        : "TAX (IGST)"}
+                  </td>
+                  <td
+                    style={{
+                      padding: "4px 0",
+                      textAlign: "right",
+                      whiteSpace: "nowrap",
+                      fontWeight: "bold",
+                      color: "#111",
+                      fontSize: "8.5pt",
+                    }}>
+                    {totals.fmtVatWithSym}
+                  </td>
+                </tr>
+              )}
               <tr style={{ color: "#111" }}>
                 <td
                   style={{

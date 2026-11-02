@@ -3,14 +3,23 @@ import { InvoicePreviewTableProps } from "@/types/invoice";
 export function InvoicePreviewTable({
   items,
   currency = "INR",
+  gstType = "IGST",
 }: InvoicePreviewTableProps) {
   const filteredItems =
     items?.filter((i) => i.description || i.qty || i.rate) || [];
 
   const isVat = currency === "EUR" || currency === "GBP";
   const isSst = currency === "MYR";
+  const isCgstSgst =
+    (!currency || currency === "INR") && gstType === "CGST_SGST";
   const taxHeader1 = isSst ? "SST %" : isVat ? "VAT %" : "GST";
-  const taxHeader2 = isSst ? "SST" : isVat ? "VAT" : "IGST";
+  const taxHeader2 = isSst
+    ? "SST"
+    : isVat
+      ? "VAT"
+      : isCgstSgst
+        ? "CGST+SGST"
+        : "IGST";
 
   const currencySymbols = {
     INR: "₹",

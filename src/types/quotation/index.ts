@@ -21,6 +21,7 @@ export interface QuotationData {
   items: QuotationLineItem[];
   currency?: "INR" | "EUR" | "GBP" | "MYR";
   durationMonths?: number;
+  gstType?: "IGST" | "CGST_SGST";
 
   showRateCard?: boolean;
   rateCardTitle?: string;
@@ -54,4 +55,5 @@ export interface QuotationPreviewProps {
 export interface QuotationPreviewTableProps {
   items: QuotationLineItem[];
   currency?: "INR" | "EUR" | "GBP" | "MYR";
+  gstType?: "IGST" | "CGST_SGST";
 }

@@ -146,6 +146,48 @@ function QuotationPageClient() {
                 </select>
               </div>
 
+              {(!data.currency || data.currency === "INR") && (
+                <div className="flex flex-col space-y-1 pt-1 border-t border-gray-200/60">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+                      GST Type
+                    </label>
+                    <span className="text-[11px] font-semibold text-[#8C52FF] bg-purple-50 px-2 py-0.5 rounded">
+                      {data.gstType === "CGST_SGST"
+                        ? "CGST + SGST (Intra-State)"
+                        : "IGST (Inter-State)"}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-1.5 mt-1 bg-gray-200/70 p-1 rounded-lg">
+                    <button
+                      type="button"
+                      onClick={() => setField("gstType", "IGST")}
+                      className={`py-1.5 px-2 text-xs font-semibold rounded-md transition-all cursor-pointer text-center ${
+                        !data.gstType || data.gstType === "IGST"
+                          ? "bg-white text-[#8C52FF] shadow-sm font-bold"
+                          : "text-gray-600 hover:text-gray-900"
+                      }`}>
+                      IGST (Inter-State)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setField("gstType", "CGST_SGST")}
+                      className={`py-1.5 px-2 text-xs font-semibold rounded-md transition-all cursor-pointer text-center ${
+                        data.gstType === "CGST_SGST"
+                          ? "bg-white text-[#8C52FF] shadow-sm font-bold"
+                          : "text-gray-600 hover:text-gray-900"
+                      }`}>
+                      CGST + SGST
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-gray-400 mt-0.5">
+                    {data.gstType === "CGST_SGST"
+                      ? "Splits calculated GST 50/50 into CGST and SGST rows in summary."
+                      : "Shows unified IGST row in summary."}
+                  </p>
+                </div>
+              )}
+
               <div className="flex flex-col space-y-1 pt-1 border-t border-gray-200/60">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-bold text-gray-500 uppercase tracking-wide">
@@ -276,16 +318,30 @@ function QuotationPageClient() {
                   <span className="text-gray-550">Subtotal</span>
                   <span>{totals.fmtSubtotal}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-550">
-                    {data.currency === "INR" || !data.currency
-                      ? "IGST Tax"
-                      : "VAT Tax"}
-                  </span>
-                  <span>
-                    {currentSymbol} {totals.fmtVat}
-                  </span>
-                </div>
+                {(!data.currency || data.currency === "INR") &&
+                data.gstType === "CGST_SGST" ? (
+                  <>
+                    <div className="flex justify-between">
+                      <span className="text-gray-550">CGST</span>
+                      <span>{totals.fmtCgst}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-550">SGST</span>
+                      <span>{totals.fmtSgst}</span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex justify-between">
+                    <span className="text-gray-550">
+                      {data.currency === "INR" || !data.currency
+                        ? "IGST Tax"
+                        : "VAT Tax"}
+                    </span>
+                    <span>
+                      {currentSymbol} {totals.fmtVat}
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between font-bold border-t border-gray-200 pt-1 mt-1 text-[#7A0000]">
                   <span>Total Amount</span>
                   <span>{totals.fmtTotal}</span>
@@ -393,6 +449,7 @@ function QuotationPageClient() {
             <QuotationPreviewTable
               items={data?.items}
               currency={data.currency}
+              gstType={data.gstType}
             />
             <QuotationPreviewRateCard
               showRateCard={data.showRateCard}

@@ -16,6 +16,7 @@ export interface InvoiceData {
   items: InvoiceLineItem[];
   currency?: "INR" | "EUR" | "GBP" | "MYR";
   durationMonths?: number;
+  gstType?: "IGST" | "CGST_SGST";
 
   // Bank details
   bank: string;
@@ -44,4 +45,5 @@ export interface InvoicePreviewProps {
 export interface InvoicePreviewTableProps {
   items: InvoiceLineItem[];
   currency?: "INR" | "EUR" | "GBP" | "MYR";
+  gstType?: "IGST" | "CGST_SGST";
 }

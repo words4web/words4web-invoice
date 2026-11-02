@@ -82,6 +82,11 @@ export function calcInvoiceTotals(
     return isNeg ? `-${formatted}` : formatted;
   };
 
+  const cgst = gst / 2;
+  const sgst = gst / 2;
+  const monthlyCgst = monthlyGst / 2;
+  const monthlySgst = monthlyGst / 2;
+
   return {
     months,
     monthlySubtotal,
@@ -93,10 +98,16 @@ export function calcInvoiceTotals(
 
     subtotal,
     vat: gst,
+    cgst,
+    sgst,
+    monthlyCgst,
+    monthlySgst,
     total,
     fmtSubtotal: fmt(subtotal),
     fmtVat: fmtRaw(gst),
     fmtVatWithSym: fmt(gst),
+    fmtCgst: fmt(cgst),
+    fmtSgst: fmt(sgst),
     fmtTotal: fmt(total),
     processedItems,
   };

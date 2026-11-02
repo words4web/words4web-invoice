@@ -30,6 +30,7 @@ export const DEFAULT_DATA: QuotationData = {
   countryOfSupply: "United Kingdom",
   items: DEFAULT_ITEMS,
   currency: "INR",
+  gstType: "IGST",
   durationMonths: 1,
   showRateCard: false,
   rateCardTitle: "REVISION & ADDITIONAL SCOPE RATE CARD",
