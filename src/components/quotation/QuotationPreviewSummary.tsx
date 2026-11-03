@@ -205,6 +205,7 @@ export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
         */}
 
         {/* Totals */}
+        {data.showSummaryTotals !== false && (
         <div
           style={{
             minWidth: "220px",
@@ -404,6 +405,7 @@ export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
             </tbody>
           </table>
         </div>
+        )}
       </div>
 
       {/* SIGNATORY */}

@@ -255,6 +255,9 @@ export function buildQuotationHtml(
     </div>
 
     <!-- Totals -->
+    ${
+      data.showSummaryTotals !== false
+        ? `
     <div class="summary-totals">
       <table class="totals-table">
         ${
@@ -301,6 +304,9 @@ export function buildQuotationHtml(
         </tr>
       </table>
     </div>
+    `
+        : ""
+    }
   </div>
 
   <!-- SIGNATORY -->

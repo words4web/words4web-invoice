@@ -237,6 +237,44 @@ function QuotationPageClient() {
                   3, 4, 5, 6...).
                 </p>
               </div>
+
+              {/* Summary Totals Visibility Toggle */}
+              <div className="flex flex-col space-y-1 pt-1 border-t border-gray-200/60">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+                      Summary Totals
+                    </label>
+                    <p className="text-[11px] text-gray-400">
+                      Show or hide Subtotal, Tax/GST, and Total in quotation.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={data.showSummaryTotals !== false}
+                    onClick={() =>
+                      setField(
+                        "showSummaryTotals",
+                        data.showSummaryTotals === false ? true : false,
+                      )
+                    }
+                    className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#8C52FF] focus:ring-offset-2 ${
+                      data.showSummaryTotals !== false
+                        ? "bg-[#8C52FF]"
+                        : "bg-gray-300"
+                    }`}>
+                    <span
+                      aria-hidden="true"
+                      className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                        data.showSummaryTotals !== false
+                          ? "translate-x-5"
+                          : "translate-x-0"
+                      }`}
+                    />
+                  </button>
+                </div>
+              </div>
             </section>
 
             <OwnerDetailsForm
