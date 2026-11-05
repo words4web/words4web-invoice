@@ -105,6 +105,7 @@ function QuotationPageClient() {
     EUR: "€",
     GBP: "£",
     MYR: "RM",
+    USD: "$",
   };
   const currentSymbol = currencySymbols[data.currency || "INR"] || "₹";
 
@@ -135,7 +136,7 @@ function QuotationPageClient() {
                   onChange={(e) =>
                     setField(
                       "currency",
-                      e.target.value as "INR" | "EUR" | "GBP" | "MYR",
+                      e.target.value as "INR" | "EUR" | "GBP" | "MYR" | "USD",
                     )
                   }
                   className="w-full bg-white border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#8C52FF] text-gray-800 cursor-pointer font-medium mt-1">
@@ -143,6 +144,7 @@ function QuotationPageClient() {
                   <option value="EUR">EUR (€) / VAT Mode</option>
                   <option value="GBP">GBP (£) / VAT Mode</option>
                   <option value="MYR">MYR (RM) / SST Mode</option>
+                  <option value="USD">USD ($) / Tax Mode</option>
                 </select>
               </div>
 
@@ -373,7 +375,11 @@ function QuotationPageClient() {
                     <span className="text-gray-550">
                       {data.currency === "INR" || !data.currency
                         ? "IGST Tax"
-                        : "VAT Tax"}
+                        : data.currency === "MYR"
+                          ? "SST Tax"
+                          : data.currency === "USD"
+                            ? "Sales Tax"
+                            : "VAT Tax"}
                     </span>
                     <span>
                       {currentSymbol} {totals.fmtVat}

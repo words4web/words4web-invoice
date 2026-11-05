@@ -361,9 +361,11 @@ export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
                     }}>
                     {data.currency === "MYR"
                       ? "SST"
-                      : data.currency && data.currency !== "INR"
-                        ? "VAT"
-                        : "TAX (IGST)"}
+                      : data.currency === "USD"
+                        ? "TAX"
+                        : data.currency && data.currency !== "INR"
+                          ? "VAT"
+                          : "TAX (IGST)"}
                   </td>
                   <td
                     style={{

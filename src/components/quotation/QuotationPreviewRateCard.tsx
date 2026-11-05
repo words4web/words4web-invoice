@@ -5,7 +5,7 @@ interface QuotationPreviewRateCardProps {
   rateCardTitle?: string;
   rateCardNote?: string;
   rateCardItems?: RateCardItem[];
-  currency?: "INR" | "EUR" | "GBP" | "MYR";
+  currency?: "INR" | "EUR" | "GBP" | "MYR" | "USD";
 }
 
 export function QuotationPreviewRateCard({
@@ -27,12 +27,14 @@ export function QuotationPreviewRateCard({
     EUR: "€",
     GBP: "£",
     MYR: "RM",
+    USD: "$",
   };
   const currencyLocales = {
     INR: "en-IN",
     EUR: "en-IE",
     GBP: "en-GB",
     MYR: "en-MY",
+    USD: "en-US",
   };
 
   const symbol = currencySymbols[currency] || "₹";

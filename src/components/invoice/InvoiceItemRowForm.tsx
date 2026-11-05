@@ -11,17 +11,21 @@ export function InvoiceItemRowForm({
 }: InvoiceItemRowFormProps) {
   const isVat = currency === "EUR" || currency === "GBP";
   const isSst = currency === "MYR";
+  const isUsd = currency === "USD";
   const taxLabel = isSst
     ? "SST Rate (%)"
     : isVat
       ? "VAT Rate (%)"
-      : "GST Rate (%)";
+      : isUsd
+        ? "Tax Rate (%)"
+        : "GST Rate (%)";
 
   const currencySymbols = {
     INR: "₹",
     EUR: "€",
     GBP: "£",
     MYR: "RM",
+    USD: "$",
   };
   const symbol = currencySymbols[currency] || "₹";
   const rateLabel = `Rate (${symbol})`;

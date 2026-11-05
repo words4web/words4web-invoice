@@ -19,7 +19,7 @@ export interface QuotationData {
   clientAddress: string;
   countryOfSupply: string;
   items: QuotationLineItem[];
-  currency?: "INR" | "EUR" | "GBP" | "MYR";
+  currency?: "INR" | "EUR" | "GBP" | "MYR" | "USD";
   durationMonths?: number;
   gstType?: "IGST" | "CGST_SGST";
   // Toggle to show or hide the summary totals breakdown (Subtotal, GST/Tax, Total)
@@ -56,6 +56,6 @@ export interface QuotationPreviewProps {
 
 export interface QuotationPreviewTableProps {
   items: QuotationLineItem[];
-  currency?: "INR" | "EUR" | "GBP" | "MYR";
+  currency?: "INR" | "EUR" | "GBP" | "MYR" | "USD";
   gstType?: "IGST" | "CGST_SGST";
 }

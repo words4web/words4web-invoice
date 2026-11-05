@@ -14,7 +14,7 @@ export interface InvoiceData {
   clientAddress: string;
   countryOfSupply: string;
   items: InvoiceLineItem[];
-  currency?: "INR" | "EUR" | "GBP" | "MYR";
+  currency?: "INR" | "EUR" | "GBP" | "MYR" | "USD";
   durationMonths?: number;
   gstType?: "IGST" | "CGST_SGST";
 
@@ -44,6 +44,6 @@ export interface InvoicePreviewProps {
 
 export interface InvoicePreviewTableProps {
   items: InvoiceLineItem[];
-  currency?: "INR" | "EUR" | "GBP" | "MYR";
+  currency?: "INR" | "EUR" | "GBP" | "MYR" | "USD";
   gstType?: "IGST" | "CGST_SGST";
 }

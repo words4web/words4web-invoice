@@ -10,28 +10,33 @@ export function InvoicePreviewTable({
 
   const isVat = currency === "EUR" || currency === "GBP";
   const isSst = currency === "MYR";
+  const isUsd = currency === "USD";
   const isCgstSgst =
     (!currency || currency === "INR") && gstType === "CGST_SGST";
-  const taxHeader1 = isSst ? "SST %" : isVat ? "VAT %" : "GST";
+  const taxHeader1 = isSst ? "SST %" : isVat ? "VAT %" : isUsd ? "Tax %" : "GST";
   const taxHeader2 = isSst
     ? "SST"
     : isVat
       ? "VAT"
-      : isCgstSgst
-        ? "CGST+SGST"
-        : "IGST";
+      : isUsd
+        ? "Tax"
+        : isCgstSgst
+          ? "CGST+SGST"
+          : "IGST";
 
   const currencySymbols = {
     INR: "₹",
     EUR: "€",
     GBP: "£",
     MYR: "RM",
+    USD: "$",
   };
   const currencyLocales = {
     INR: "en-IN",
     EUR: "en-IE",
     GBP: "en-GB",
     MYR: "en-MY",
+    USD: "en-US",
   };
 
   const symbol = currencySymbols[currency] || "₹";

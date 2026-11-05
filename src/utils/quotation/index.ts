@@ -3,7 +3,7 @@ import { QuotationLineItem } from "@/types/quotation";
 /** Compute subtotal, IGST/VAT, and total from quotation line items, factoring in duration in months */
 export function calcQuotationTotal(
   items: QuotationLineItem[],
-  currency: "INR" | "EUR" | "GBP" | "MYR" = "INR",
+  currency: "INR" | "EUR" | "GBP" | "MYR" | "USD" = "INR",
   durationMonths: number = 1,
 ) {
   const months = Math.max(1, Number(durationMonths) || 1);
@@ -44,6 +44,7 @@ export function calcQuotationTotal(
     EUR: "€",
     GBP: "£",
     MYR: "RM",
+    USD: "$",
   };
 
   const currencyLocales = {
@@ -51,6 +52,7 @@ export function calcQuotationTotal(
     EUR: "en-IE",
     GBP: "en-GB",
     MYR: "en-MY",
+    USD: "en-US",
   };
 
   const symbol = currencySymbols[currency] || "₹";
