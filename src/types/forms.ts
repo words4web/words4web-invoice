@@ -18,6 +18,8 @@ export interface BankDetailsFormProps {
   upiId: string;
   qrCode?: string;
   paypalId?: string;
+  gstNo?: string;
+  hsnCode?: string;
   onChangeField: (
     field:
       | "bank"
@@ -27,7 +29,9 @@ export interface BankDetailsFormProps {
       | "accountType"
       | "upiId"
       | "qrCode"
-      | "paypalId",
+      | "paypalId"
+      | "gstNo"
+      | "hsnCode",
     value: string,
   ) => void;
 }

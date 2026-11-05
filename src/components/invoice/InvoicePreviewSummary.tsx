@@ -106,6 +106,36 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
                   {data.bank || COMPANY.bank}
                 </td>
               </tr>
+              {data.gstNo && (
+                <tr>
+                  <td
+                    style={{
+                      padding: "3px 0",
+                      fontWeight: "bold",
+                      color: "#555",
+                    }}>
+                    GST No
+                  </td>
+                  <td style={{ padding: "3px 0", color: "#000" }}>
+                    {data.gstNo}
+                  </td>
+                </tr>
+              )}
+              {data.hsnCode && (
+                <tr>
+                  <td
+                    style={{
+                      padding: "3px 0",
+                      fontWeight: "bold",
+                      color: "#555",
+                    }}>
+                    HSN
+                  </td>
+                  <td style={{ padding: "3px 0", color: "#000" }}>
+                    {data.hsnCode}
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
           {data.paypalId && (

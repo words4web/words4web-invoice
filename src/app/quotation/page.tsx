@@ -55,7 +55,13 @@ function QuotationPageClient() {
       const doc = getDocumentById(id);
       if (doc && doc?.type === "quotation") {
         requestAnimationFrame(() => {
-          setData(doc?.data as QuotationData);
+          const loadedData = doc?.data as QuotationData;
+          setData({
+            ...DEFAULT_DATA,
+            ...loadedData,
+            gstNo: loadedData?.gstNo ?? "",
+            hsnCode: loadedData?.hsnCode ?? "",
+          });
         });
       }
     }
@@ -416,6 +422,8 @@ function QuotationPageClient() {
               upiId={data.upiId}
               qrCode={data.qrCode}
               paypalId={data.paypalId}
+              gstNo={data.gstNo}
+              hsnCode={data.hsnCode}
               onChangeField={(field, val) => setField(field, val)}
             />
 

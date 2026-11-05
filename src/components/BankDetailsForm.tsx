@@ -10,6 +10,8 @@ export function BankDetailsForm({
   upiId,
   qrCode,
   paypalId = "",
+  gstNo = "",
+  hsnCode = "",
   onChangeField,
 }: BankDetailsFormProps) {
   return (
@@ -59,6 +61,18 @@ export function BankDetailsForm({
           placeholder="e.g. payments@words4web.com"
           value={paypalId}
           onChange={(val) => onChangeField("paypalId", val)}
+        />
+        <FormInput
+          label="GST Number"
+          placeholder="e.g. 27ABCDE1234F1Z5"
+          value={gstNo}
+          onChange={(val) => onChangeField("gstNo", val)}
+        />
+        <FormInput
+          label="HSN"
+          placeholder="e.g. 998314"
+          value={hsnCode}
+          onChange={(val) => onChangeField("hsnCode", val)}
         />
         {/*
         <div>

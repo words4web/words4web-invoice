@@ -39,6 +39,8 @@ export interface QuotationData {
   upiId: string;
   qrCode?: string;
   paypalId?: string;
+  gstNo?: string;
+  hsnCode?: string;
 
   // Terms & Conditions / Additional Notes
   additionalNotes: string;

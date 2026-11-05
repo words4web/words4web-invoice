@@ -52,7 +52,13 @@ function InvoicePageClient() {
       const doc = getDocumentById(id);
       if (doc && doc.type === "invoice") {
         requestAnimationFrame(() => {
-          setData(doc.data as InvoiceData);
+          const loadedData = doc.data as InvoiceData;
+          setData({
+            ...DEFAULT_DATA,
+            ...loadedData,
+            gstNo: loadedData?.gstNo ?? "",
+            hsnCode: loadedData?.hsnCode ?? "",
+          });
         });
       }
     }
@@ -361,6 +367,8 @@ function InvoicePageClient() {
               upiId={data.upiId}
               qrCode={data.qrCode}
               paypalId={data.paypalId}
+              gstNo={data.gstNo}
+              hsnCode={data.hsnCode}
               onChangeField={(field, val) => setField(field, val)}
             />
 

@@ -17,7 +17,7 @@ export function FormInput({
       <label className={labelCls}>{label}</label>
       <input
         className={inputCls}
-        value={value}
+        value={value ?? ""}
         onChange={(e) => onChange(e.target.value)}
         {...props}
       />
@@ -37,7 +37,7 @@ export function FormTextarea({
       <label className={labelCls}>{label}</label>
       <textarea
         className={`${inputCls} resize-none`}
-        value={value}
+        value={value ?? ""}
         onChange={(e) => onChange(e.target.value)}
         {...props}
       />

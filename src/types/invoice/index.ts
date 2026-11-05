@@ -27,6 +27,8 @@ export interface InvoiceData {
   upiId: string;
   qrCode?: string;
   paypalId?: string;
+  gstNo?: string;
+  hsnCode?: string;
 
   // Terms & Conditions
   termsAndConditions: string;
