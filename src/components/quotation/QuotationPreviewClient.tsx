@@ -2,6 +2,7 @@ import { QuotationPreviewProps } from "@/types/quotation";
 import { COMPANY } from "@/data/company";
 
 export function QuotationPreviewClient({ data }: QuotationPreviewProps) {
+  const ownerName = data.ownerName || COMPANY.name;
   const ownerAddress = data.ownerAddress || COMPANY.address;
   const ownerPhone = data.ownerPhone || COMPANY.phones[0];
   const ownerEmail = data.ownerEmail || COMPANY.email;
@@ -32,6 +33,15 @@ export function QuotationPreviewClient({ data }: QuotationPreviewProps) {
               textTransform: "uppercase",
             }}>
             Quotation From
+          </div>
+          <div
+            style={{
+              fontWeight: "bold",
+              fontSize: "9.5pt",
+              color: "#000",
+              marginBottom: "2px",
+            }}>
+            {ownerName}
           </div>
           <a
             href={ownerWebsite}

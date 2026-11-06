@@ -454,6 +454,17 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
             alignItems: "center",
             width: "220px",
           }}>
+          <div
+            style={{
+              fontSize: "8.5pt",
+              fontWeight: "bold",
+              color: "#111",
+              marginBottom: "2px",
+              width: "100%",
+              textAlign: "center",
+            }}>
+            For {data.ownerName || COMPANY.name}
+          </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/deepali.sign.jpeg"
@@ -474,7 +485,7 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
               width: "100%",
               textAlign: "center",
             }}>
-            Accounts and Business Development
+            Authorised Signatory
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

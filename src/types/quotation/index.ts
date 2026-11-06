@@ -46,6 +46,7 @@ export interface QuotationData {
   additionalNotes: string;
 
   // Owner details (editable)
+  ownerName?: string;
   ownerAddress?: string;
   ownerPhone?: string;
   ownerEmail?: string;

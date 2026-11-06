@@ -32,6 +32,7 @@ export const DEFAULT_DATA: InvoiceData = {
   hsnCode: "",
   termsAndConditions:
     "1. Please pay within 7 days from the date of invoice.\n2. Please quote invoice number when remitting funds.",
+  ownerName: COMPANY.name,
   ownerAddress: COMPANY.address,
   ownerPhone: COMPANY.phones.join(" / "),
   ownerEmail: COMPANY.email,

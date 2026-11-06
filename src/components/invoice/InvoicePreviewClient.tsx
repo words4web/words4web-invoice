@@ -2,6 +2,7 @@ import { InvoicePreviewProps } from "@/types/invoice";
 import { COMPANY } from "@/data/company";
 
 export function InvoicePreviewClient({ data }: InvoicePreviewProps) {
+  const ownerName = data?.ownerName || COMPANY.name;
   const ownerAddress = data?.ownerAddress || COMPANY.address;
   const ownerPhone = data?.ownerPhone || COMPANY.phones[0];
   const ownerEmail = data?.ownerEmail || COMPANY.email;
@@ -31,6 +32,15 @@ export function InvoicePreviewClient({ data }: InvoicePreviewProps) {
               textTransform: "uppercase",
             }}>
             Billed By
+          </div>
+          <div
+            style={{
+              fontWeight: "bold",
+              fontSize: "9.5pt",
+              color: "#000",
+              marginBottom: "2px",
+            }}>
+            {ownerName}
           </div>
           <a
             href={ownerWebsite}

@@ -86,6 +86,7 @@ export function buildInvoiceHtml(
     })
     .join("");
 
+  const ownerName = data.ownerName || COMPANY.name;
   const ownerAddressLines = (data.ownerAddress || COMPANY.address)
     .split("\n")
     .join("<br>");
@@ -143,6 +144,7 @@ export function buildInvoiceHtml(
     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
       <div class="address-col left-align">
         <div class="title">Billed By</div>
+        <div style="font-weight: bold; font-size: 10pt; color: #000; margin-bottom: 2pt;">${ownerName}</div>
         <a class="website-link" href="${ownerWebsite}" target="_blank">${ownerWebsite}</a>
         <div class="content">${ownerAddressLines}</div>
         <div class="content" style="margin-top: 4px;">Email: ${ownerEmail}</div>
@@ -254,8 +256,9 @@ export function buildInvoiceHtml(
   <!-- SIGNATORY -->
   <div class="signatory-section">
     <div class="signatory-box" style="height: auto; margin-bottom: 2pt; display: flex; flex-direction: column; align-items: center; width: 180pt;">
+      <div style="font-size: 8.5pt; font-weight: bold; color: #111; margin-bottom: 2pt; width: 100%; text-align: center;">For ${ownerName}</div>
       <img src="${signatureBase64}" alt="Signature" style="height: 40pt; width: auto; display: block; margin-bottom: -4pt;" />
-      <div class="signatory-label" style="width: 100%;">Accounts and Business Development</div>
+      <div class="signatory-label" style="width: 100%;">Authorised Signatory</div>
       <img src="${stampBase64}" alt="Stamp" style="height: 60pt; width: auto; display: block; margin-top: 4pt;" />
     </div>
   </div>

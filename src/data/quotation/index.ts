@@ -49,6 +49,7 @@ export const DEFAULT_DATA: QuotationData = {
   hsnCode: "",
   additionalNotes:
     "If you agree with this quotation kindly send a signed acceptance on the shared attachment and the date of commencement of the services, which is from May 2026.",
+  ownerName: COMPANY.name,
   ownerAddress: COMPANY.address,
   ownerPhone: COMPANY.phones.join(" / "),
   ownerEmail: COMPANY.email,

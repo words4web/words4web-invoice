@@ -34,6 +34,7 @@ export interface InvoiceData {
   termsAndConditions: string;
 
   // Owner details (editable)
+  ownerName?: string;
   ownerAddress?: string;
   ownerPhone?: string;
   ownerEmail?: string;

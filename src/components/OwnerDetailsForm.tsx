@@ -2,6 +2,7 @@ import { FormInput, FormTextarea } from "./FormFields";
 import { OwnerDetailsFormProps } from "@/types/forms";
 
 export function OwnerDetailsForm({
+  ownerName,
   ownerAddress,
   ownerPhone,
   ownerEmail,
@@ -14,6 +15,12 @@ export function OwnerDetailsForm({
         Company Details (Owner)
       </h2>
       <div className="space-y-3">
+        <FormInput
+          label="Company / Entity Name"
+          placeholder="Words4Web LLP"
+          value={ownerName || ""}
+          onChange={(val) => onChangeField("ownerName", val)}
+        />
         <FormTextarea
           label="Company Address"
           rows={3}

@@ -286,6 +286,7 @@ function QuotationPageClient() {
             </section>
 
             <OwnerDetailsForm
+              ownerName={data.ownerName || COMPANY.name}
               ownerAddress={data.ownerAddress || ""}
               ownerPhone={data.ownerPhone || ""}
               ownerEmail={data.ownerEmail || ""}

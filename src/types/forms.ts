@@ -42,12 +42,18 @@ export interface ClientDetailsFormProps {
 }
 
 export interface OwnerDetailsFormProps {
+  ownerName?: string;
   ownerAddress: string;
   ownerPhone: string;
   ownerEmail: string;
   ownerWebsite: string;
   onChangeField: (
-    field: "ownerAddress" | "ownerPhone" | "ownerEmail" | "ownerWebsite",
+    field:
+      | "ownerName"
+      | "ownerAddress"
+      | "ownerPhone"
+      | "ownerEmail"
+      | "ownerWebsite",
     value: string,
   ) => void;
 }
