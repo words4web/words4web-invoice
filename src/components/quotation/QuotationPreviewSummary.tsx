@@ -17,154 +17,157 @@ export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent:
+            data.showBankDetails !== false ? "space-between" : "flex-end",
           alignItems: "flex-start",
           gap: "20px",
         }}>
         {/* Bank Details */}
-        <div style={{ width: "38%" }}>
-          <div
-            style={{
-              fontWeight: "bold",
-              fontSize: "9pt",
-              color: "#111",
-              marginBottom: "6px",
-              textTransform: "uppercase",
-            }}>
-            Bank Details
-          </div>
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              fontSize: "8.5pt",
-            }}>
-            <tbody>
-              <tr>
-                <td
-                  style={{
-                    padding: "3px 0",
-                    fontWeight: "bold",
-                    color: "#555",
-                    width: "100px",
-                  }}>
-                  Account Name
-                </td>
-                <td style={{ padding: "3px 0", color: "#000" }}>
-                  {data.accountName || COMPANY.accountName}
-                </td>
-              </tr>
-              <tr>
-                <td
-                  style={{
-                    padding: "3px 0",
-                    fontWeight: "bold",
-                    color: "#555",
-                  }}>
-                  Account Number
-                </td>
-                <td style={{ padding: "3px 0", color: "#000" }}>
-                  {data.accountNo || COMPANY.accountNo}
-                </td>
-              </tr>
-              <tr>
-                <td
-                  style={{
-                    padding: "3px 0",
-                    fontWeight: "bold",
-                    color: "#555",
-                  }}>
-                  IFSC
-                </td>
-                <td style={{ padding: "3px 0", color: "#000" }}>
-                  {data.ifsc || COMPANY.ifsc}
-                </td>
-              </tr>
-              <tr>
-                <td
-                  style={{
-                    padding: "3px 0",
-                    fontWeight: "bold",
-                    color: "#555",
-                  }}>
-                  Account Type
-                </td>
-                <td style={{ padding: "3px 0", color: "#000" }}>
-                  {data.accountType || COMPANY.accountType}
-                </td>
-              </tr>
-              <tr>
-                <td
-                  style={{
-                    padding: "3px 0",
-                    fontWeight: "bold",
-                    color: "#555",
-                  }}>
-                  Bank
-                </td>
-                <td style={{ padding: "3px 0", color: "#000" }}>
-                  {data.bank || COMPANY.bank}
-                </td>
-              </tr>
-              {data.gstNo && (
-                <tr>
-                  <td
-                    style={{
-                      padding: "3px 0",
-                      fontWeight: "bold",
-                      color: "#555",
-                    }}>
-                    GST No
-                  </td>
-                  <td style={{ padding: "3px 0", color: "#000" }}>
-                    {data.gstNo}
-                  </td>
-                </tr>
-              )}
-              {data.hsnCode && (
-                <tr>
-                  <td
-                    style={{
-                      padding: "3px 0",
-                      fontWeight: "bold",
-                      color: "#555",
-                    }}>
-                    HSN
-                  </td>
-                  <td style={{ padding: "3px 0", color: "#000" }}>
-                    {data.hsnCode}
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-          {data.paypalId && (
+        {data.showBankDetails !== false && (
+          <div style={{ width: "38%" }}>
             <div
               style={{
-                marginTop: "12px",
-                padding: "4px 8px",
-                background: "#f9fafb",
-                border: "1px solid #e5e7eb",
-                borderRadius: "6px",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                width: "230px",
+                fontWeight: "bold",
+                fontSize: "9pt",
+                color: "#111",
+                marginBottom: "6px",
+                textTransform: "uppercase",
               }}>
-              <PaypalIcon
-                style={{ height: "30px", width: "auto", flexShrink: 0 }}
-              />
-              <span
-                style={{
-                  color: "#111",
-                  fontWeight: "600",
-                  wordBreak: "break-all",
-                }}>
-                {data.paypalId}
-              </span>
+              Bank Details
             </div>
-          )}
-        </div>
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                fontSize: "8.5pt",
+              }}>
+              <tbody>
+                <tr>
+                  <td
+                    style={{
+                      padding: "3px 0",
+                      fontWeight: "bold",
+                      color: "#555",
+                      width: "100px",
+                    }}>
+                    Account Name
+                  </td>
+                  <td style={{ padding: "3px 0", color: "#000" }}>
+                    {data.accountName || COMPANY.accountName}
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style={{
+                      padding: "3px 0",
+                      fontWeight: "bold",
+                      color: "#555",
+                    }}>
+                    Account Number
+                  </td>
+                  <td style={{ padding: "3px 0", color: "#000" }}>
+                    {data.accountNo || COMPANY.accountNo}
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style={{
+                      padding: "3px 0",
+                      fontWeight: "bold",
+                      color: "#555",
+                    }}>
+                    IFSC
+                  </td>
+                  <td style={{ padding: "3px 0", color: "#000" }}>
+                    {data.ifsc || COMPANY.ifsc}
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style={{
+                      padding: "3px 0",
+                      fontWeight: "bold",
+                      color: "#555",
+                    }}>
+                    Account Type
+                  </td>
+                  <td style={{ padding: "3px 0", color: "#000" }}>
+                    {data.accountType || COMPANY.accountType}
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style={{
+                      padding: "3px 0",
+                      fontWeight: "bold",
+                      color: "#555",
+                    }}>
+                    Bank
+                  </td>
+                  <td style={{ padding: "3px 0", color: "#000" }}>
+                    {data.bank || COMPANY.bank}
+                  </td>
+                </tr>
+                {data.gstNo && (
+                  <tr>
+                    <td
+                      style={{
+                        padding: "3px 0",
+                        fontWeight: "bold",
+                        color: "#555",
+                      }}>
+                      GST No
+                    </td>
+                    <td style={{ padding: "3px 0", color: "#000" }}>
+                      {data.gstNo}
+                    </td>
+                  </tr>
+                )}
+                {data.hsnCode && (
+                  <tr>
+                    <td
+                      style={{
+                        padding: "3px 0",
+                        fontWeight: "bold",
+                        color: "#555",
+                      }}>
+                      HSN
+                    </td>
+                    <td style={{ padding: "3px 0", color: "#000" }}>
+                      {data.hsnCode}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+            {data.paypalId && (
+              <div
+                style={{
+                  marginTop: "12px",
+                  padding: "4px 8px",
+                  background: "#f9fafb",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "6px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  width: "230px",
+                }}>
+                <PaypalIcon
+                  style={{ height: "30px", width: "auto", flexShrink: 0 }}
+                />
+                <span
+                  style={{
+                    color: "#111",
+                    fontWeight: "600",
+                    wordBreak: "break-all",
+                  }}>
+                  {data.paypalId}
+                </span>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* UPI Scan */}
         {/*
@@ -236,207 +239,208 @@ export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
 
         {/* Totals */}
         {data.showSummaryTotals !== false && (
-        <div
-          style={{
-            minWidth: "220px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-end",
-          }}>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <tbody>
-              {totals.months > 1 && (
-                <>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "3px 12px 3px 0",
-                        fontWeight: "bold",
-                        textAlign: "left",
-                        color: "#6b7280",
-                        fontSize: "8pt",
-                        whiteSpace: "nowrap",
-                      }}>
-                      MONTHLY TOTAL
-                    </td>
-                    <td
-                      style={{
-                        padding: "3px 0",
-                        textAlign: "right",
-                        whiteSpace: "nowrap",
-                        fontWeight: "bold",
-                        color: "#4b5563",
-                        fontSize: "8pt",
-                      }}>
-                      {totals.fmtMonthlyTotal} / mo
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "3px 12px 6px 0",
-                        fontWeight: "bold",
-                        textAlign: "left",
-                        color: "#8C52FF",
-                        fontSize: "8pt",
-                        whiteSpace: "nowrap",
-                        borderBottom: "1px dashed #e5e7eb",
-                      }}>
-                      DURATION
-                    </td>
-                    <td
-                      style={{
-                        padding: "3px 0 6px 0",
-                        textAlign: "right",
-                        whiteSpace: "nowrap",
-                        fontWeight: "bold",
-                        color: "#8C52FF",
-                        fontSize: "8pt",
-                        borderBottom: "1px dashed #e5e7eb",
-                      }}>
-                      {totals.months} Months (×{totals.months})
-                    </td>
-                  </tr>
-                </>
-              )}
-              <tr>
-                <td
-                  style={{
-                    padding:
-                      totals.months > 1 ? "6px 12px 4px 0" : "4px 12px 4px 0",
-                    fontWeight: "bold",
-                    textAlign: "left",
-                    color: "#555",
-                    fontSize: "8.5pt",
-                    whiteSpace: "nowrap",
-                  }}>
-                  {totals.months > 1
-                    ? `SUBTOTAL (${totals.months}M)`
-                    : "SUBTOTAL"}
-                </td>
-                <td
-                  style={{
-                    padding: totals.months > 1 ? "6px 0 4px 0" : "4px 0",
-                    textAlign: "right",
-                    whiteSpace: "nowrap",
-                    fontWeight: "bold",
-                    color: "#111",
-                    fontSize: "8.5pt",
-                  }}>
-                  {totals.fmtSubtotal}
-                </td>
-              </tr>
-              {(!data.currency || data.currency === "INR") &&
-              data.gstType === "CGST_SGST" ? (
-                <>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "4px 12px 2px 0",
-                        fontWeight: "bold",
-                        textAlign: "left",
-                        color: "#555",
-                        fontSize: "8.5pt",
-                        whiteSpace: "nowrap",
-                      }}>
-                      CGST
-                    </td>
-                    <td
-                      style={{
-                        padding: "4px 0 2px 0",
-                        textAlign: "right",
-                        whiteSpace: "nowrap",
-                        fontWeight: "bold",
-                        color: "#111",
-                        fontSize: "8.5pt",
-                      }}>
-                      {totals.fmtCgst}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "2px 12px 4px 0",
-                        fontWeight: "bold",
-                        textAlign: "left",
-                        color: "#555",
-                        fontSize: "8.5pt",
-                        whiteSpace: "nowrap",
-                      }}>
-                      SGST
-                    </td>
-                    <td
-                      style={{
-                        padding: "2px 0 4px 0",
-                        textAlign: "right",
-                        whiteSpace: "nowrap",
-                        fontWeight: "bold",
-                        color: "#111",
-                        fontSize: "8.5pt",
-                      }}>
-                      {totals.fmtSgst}
-                    </td>
-                  </tr>
-                </>
-              ) : (
+          <div
+            style={{
+              minWidth: "220px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-end",
+              marginLeft: data.showBankDetails === false ? "auto" : undefined,
+            }}>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <tbody>
+                {totals.months > 1 && (
+                  <>
+                    <tr>
+                      <td
+                        style={{
+                          padding: "3px 12px 3px 0",
+                          fontWeight: "bold",
+                          textAlign: "left",
+                          color: "#6b7280",
+                          fontSize: "8pt",
+                          whiteSpace: "nowrap",
+                        }}>
+                        MONTHLY TOTAL
+                      </td>
+                      <td
+                        style={{
+                          padding: "3px 0",
+                          textAlign: "right",
+                          whiteSpace: "nowrap",
+                          fontWeight: "bold",
+                          color: "#4b5563",
+                          fontSize: "8pt",
+                        }}>
+                        {totals.fmtMonthlyTotal} / mo
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          padding: "3px 12px 6px 0",
+                          fontWeight: "bold",
+                          textAlign: "left",
+                          color: "#8C52FF",
+                          fontSize: "8pt",
+                          whiteSpace: "nowrap",
+                          borderBottom: "1px dashed #e5e7eb",
+                        }}>
+                        DURATION
+                      </td>
+                      <td
+                        style={{
+                          padding: "3px 0 6px 0",
+                          textAlign: "right",
+                          whiteSpace: "nowrap",
+                          fontWeight: "bold",
+                          color: "#8C52FF",
+                          fontSize: "8pt",
+                          borderBottom: "1px dashed #e5e7eb",
+                        }}>
+                        {totals.months} Months (×{totals.months})
+                      </td>
+                    </tr>
+                  </>
+                )}
                 <tr>
                   <td
                     style={{
-                      padding: "4px 12px 4px 0",
+                      padding:
+                        totals.months > 1 ? "6px 12px 4px 0" : "4px 12px 4px 0",
                       fontWeight: "bold",
                       textAlign: "left",
                       color: "#555",
                       fontSize: "8.5pt",
                       whiteSpace: "nowrap",
                     }}>
-                    {data.currency === "MYR"
-                      ? "SST"
-                      : data.currency === "USD"
-                        ? "TAX"
-                        : data.currency && data.currency !== "INR"
-                          ? "VAT"
-                          : "TAX (IGST)"}
+                    {totals.months > 1
+                      ? `SUBTOTAL (${totals.months}M)`
+                      : "SUBTOTAL"}
                   </td>
                   <td
                     style={{
-                      padding: "4px 0",
+                      padding: totals.months > 1 ? "6px 0 4px 0" : "4px 0",
                       textAlign: "right",
                       whiteSpace: "nowrap",
                       fontWeight: "bold",
                       color: "#111",
                       fontSize: "8.5pt",
                     }}>
-                    {totals.fmtVatWithSym}
+                    {totals.fmtSubtotal}
                   </td>
                 </tr>
-              )}
-              <tr style={{ color: "#111" }}>
-                <td
-                  style={{
-                    padding: "6px 12px 6px 0",
-                    fontWeight: "bold",
-                    textAlign: "left",
-                    fontSize: "10pt",
-                    whiteSpace: "nowrap",
-                    borderTop: "1px solid #111",
-                  }}>
-                  {totals.months > 1 ? "CONTRACT TOTAL" : "TOTAL"}
-                </td>
-                <td
-                  style={{
-                    padding: "6px 0",
-                    textAlign: "right",
-                    whiteSpace: "nowrap",
-                    fontWeight: "bold",
-                    fontSize: "10pt",
-                    borderTop: "1px solid #111",
-                  }}>
-                  {totals.fmtTotal}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                {(!data.currency || data.currency === "INR") &&
+                data.gstType === "CGST_SGST" ? (
+                  <>
+                    <tr>
+                      <td
+                        style={{
+                          padding: "4px 12px 2px 0",
+                          fontWeight: "bold",
+                          textAlign: "left",
+                          color: "#555",
+                          fontSize: "8.5pt",
+                          whiteSpace: "nowrap",
+                        }}>
+                        CGST
+                      </td>
+                      <td
+                        style={{
+                          padding: "4px 0 2px 0",
+                          textAlign: "right",
+                          whiteSpace: "nowrap",
+                          fontWeight: "bold",
+                          color: "#111",
+                          fontSize: "8.5pt",
+                        }}>
+                        {totals.fmtCgst}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          padding: "2px 12px 4px 0",
+                          fontWeight: "bold",
+                          textAlign: "left",
+                          color: "#555",
+                          fontSize: "8.5pt",
+                          whiteSpace: "nowrap",
+                        }}>
+                        SGST
+                      </td>
+                      <td
+                        style={{
+                          padding: "2px 0 4px 0",
+                          textAlign: "right",
+                          whiteSpace: "nowrap",
+                          fontWeight: "bold",
+                          color: "#111",
+                          fontSize: "8.5pt",
+                        }}>
+                        {totals.fmtSgst}
+                      </td>
+                    </tr>
+                  </>
+                ) : (
+                  <tr>
+                    <td
+                      style={{
+                        padding: "4px 12px 4px 0",
+                        fontWeight: "bold",
+                        textAlign: "left",
+                        color: "#555",
+                        fontSize: "8.5pt",
+                        whiteSpace: "nowrap",
+                      }}>
+                      {data.currency === "MYR"
+                        ? "SST"
+                        : data.currency === "USD"
+                          ? "TAX"
+                          : data.currency && data.currency !== "INR"
+                            ? "VAT"
+                            : "TAX (IGST)"}
+                    </td>
+                    <td
+                      style={{
+                        padding: "4px 0",
+                        textAlign: "right",
+                        whiteSpace: "nowrap",
+                        fontWeight: "bold",
+                        color: "#111",
+                        fontSize: "8.5pt",
+                      }}>
+                      {totals.fmtVatWithSym}
+                    </td>
+                  </tr>
+                )}
+                <tr style={{ color: "#111" }}>
+                  <td
+                    style={{
+                      padding: "6px 12px 6px 0",
+                      fontWeight: "bold",
+                      textAlign: "left",
+                      fontSize: "10pt",
+                      whiteSpace: "nowrap",
+                      borderTop: "1px solid #111",
+                    }}>
+                    {totals.months > 1 ? "CONTRACT TOTAL" : "TOTAL"}
+                  </td>
+                  <td
+                    style={{
+                      padding: "6px 0",
+                      textAlign: "right",
+                      whiteSpace: "nowrap",
+                      fontWeight: "bold",
+                      fontSize: "10pt",
+                      borderTop: "1px solid #111",
+                    }}>
+                    {totals.fmtTotal}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 

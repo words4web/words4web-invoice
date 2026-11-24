@@ -238,8 +238,11 @@ export function buildQuotationHtml(
   ${rateCardHtml}
 
   <!-- SUMMARY SECTION -->
-  <div class="summary-section">
+  <div class="summary-section" style="${data.showBankDetails === false ? "justify-content: flex-end;" : ""}">
     <!-- Bank Details -->
+    ${
+      data.showBankDetails !== false
+        ? `
     <div class="summary-bank">
       <div class="title">Bank Details</div>
       <table class="bank-table">
@@ -262,12 +265,15 @@ export function buildQuotationHtml(
           : ""
       }
     </div>
+    `
+        : ""
+    }
 
     <!-- Totals -->
     ${
       data.showSummaryTotals !== false
         ? `
-    <div class="summary-totals">
+    <div class="summary-totals" style="${data.showBankDetails === false ? "margin-left: auto;" : ""}">
       <table class="totals-table">
         ${
           totals.months > 1

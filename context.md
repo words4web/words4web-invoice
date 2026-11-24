@@ -151,11 +151,11 @@ From `new uk client/implementation_plan.md`:
 
 ### Planned App Routes
 
-| Route        | Purpose                                              |
-| ------------ | ---------------------------------------------------- |
-| `/`          | Dashboard & Document List (Words4Web)                |
-| `/invoice`   | Invoice generator tool                               |
-| `/quotation` | Quotation generator tool                             |
+| Route        | Purpose                               |
+| ------------ | ------------------------------------- |
+| `/`          | Dashboard & Document List (Words4Web) |
+| `/invoice`   | Invoice generator tool                |
+| `/quotation` | Quotation generator tool              |
 
 ---
 
@@ -313,6 +313,16 @@ From `new uk client/implementation_plan.md`:
 - [x] Updated "Billed By" (Invoice) and "Quotation From" (Quotation) preview and print builders to prominently render `ownerName` above website and address.
 - [x] Updated Signatory section across live previews and PDF print builders to render `For ${ownerName}` and `Authorised Signatory`.
 - [x] Reverted sample client address in `src/data/invoice/index.ts` to `"DSF Food Private\nLimited.\nHaryana,Panipat"`.
+- [x] Verified zero TypeScript compilation errors (`pnpm tsc --noEmit`).
+
+### Phase 17: Bank Details & Summary Totals Toggle Controls (November 24, 2026) ✅
+
+- [x] Added `showBankDetails?: boolean;` and `showSummaryTotals?: boolean;` to `InvoiceData`, and `showBankDetails?: boolean;` to `QuotationData`.
+- [x] Added `showBankDetails?: boolean;`, `onToggleBankDetails?: (show: boolean) => void;`, and `accentColor?: string;` to `BankDetailsFormProps` in `src/types/forms.ts`.
+- [x] Added interactive toggle switch component directly into the `BankDetailsForm` section header allowing quick show/hide of the Bank Details block.
+- [x] Added toggle switches for **Bank Details** and **Summary Totals** in `src/app/invoice/page.tsx` and **Bank Details** in `src/app/quotation/page.tsx` (preserving existing Summary Totals toggle).
+- [x] Updated `InvoicePreviewSummary.tsx` and `QuotationPreviewSummary.tsx` to conditionally render Bank Details based on `data.showBankDetails !== false`, and adjusted flex layout (`justifyContent: flex-end`, `marginLeft: auto`) so totals remain properly right-aligned when bank details are hidden.
+- [x] Updated print & PDF builders (`src/lib/invoiceBuilder.ts` and `src/lib/quotationBuilder.ts`) to conditionally render Bank Details (and Summary Totals in Invoice) with matching alignment styles.
 - [x] Verified zero TypeScript compilation errors (`pnpm tsc --noEmit`).
 
 ---

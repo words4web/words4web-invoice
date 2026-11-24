@@ -33,6 +33,7 @@ export const DEFAULT_DATA: QuotationData = {
   gstType: "IGST",
   durationMonths: 1,
   showSummaryTotals: true,
+  showBankDetails: true,
   showRateCard: false,
   rateCardTitle: "REVISION & ADDITIONAL SCOPE RATE CARD",
   rateCardNote:

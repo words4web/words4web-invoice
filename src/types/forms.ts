@@ -20,6 +20,9 @@ export interface BankDetailsFormProps {
   paypalId?: string;
   gstNo?: string;
   hsnCode?: string;
+  showBankDetails?: boolean;
+  onToggleBankDetails?: (show: boolean) => void;
+  accentColor?: string;
   onChangeField: (
     field:
       | "bank"

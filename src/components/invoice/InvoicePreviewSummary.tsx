@@ -17,12 +17,14 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent:
+            data.showBankDetails !== false ? "space-between" : "flex-end",
           alignItems: "flex-start",
           gap: "20px",
         }}>
         {/* Bank Details */}
-        <div style={{ width: "38%" }}>
+        {data.showBankDetails !== false && (
+          <div style={{ width: "38%" }}>
           <div
             style={{
               fontWeight: "bold",
@@ -165,6 +167,7 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
             </div>
           )}
         </div>
+        )}
 
         {/* UPI Scan */}
         {/*
@@ -235,13 +238,15 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
         */}
 
         {/* Totals */}
-        <div
-          style={{
-            minWidth: "220px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-end",
-          }}>
+        {data.showSummaryTotals !== false && (
+          <div
+            style={{
+              minWidth: "220px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-end",
+              marginLeft: data.showBankDetails === false ? "auto" : undefined,
+            }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <tbody>
               {totals.months > 1 && (
@@ -436,6 +441,7 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
             </tbody>
           </table>
         </div>
+        )}
       </div>
 
       {/* SIGNATORY */}

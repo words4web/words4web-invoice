@@ -17,6 +17,8 @@ export interface InvoiceData {
   currency?: "INR" | "EUR" | "GBP" | "MYR" | "USD";
   durationMonths?: number;
   gstType?: "IGST" | "CGST_SGST";
+  showSummaryTotals?: boolean;
+  showBankDetails?: boolean;
 
   // Bank details
   bank: string;

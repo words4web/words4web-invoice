@@ -12,13 +12,48 @@ export function BankDetailsForm({
   paypalId = "",
   gstNo = "",
   hsnCode = "",
+  showBankDetails = true,
+  onToggleBankDetails,
+  accentColor = "#7A0000",
   onChangeField,
 }: BankDetailsFormProps) {
   return (
     <section>
-      <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 border-b pb-1">
-        Bank & UPI Payment Details
-      </h2>
+      <div className="flex items-center justify-between border-b pb-1 mb-3">
+        <div>
+          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+            Bank & UPI Payment Details
+          </h2>
+          <p className="text-[11px] text-gray-400">
+            Show or hide bank details on document
+          </p>
+        </div>
+        {onToggleBankDetails && (
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-medium text-gray-500">
+              {showBankDetails !== false ? "Visible" : "Hidden"}
+            </span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={showBankDetails !== false}
+              onClick={() => onToggleBankDetails(showBankDetails === false)}
+              className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                showBankDetails !== false ? "" : "bg-gray-300"
+              }`}
+              style={{
+                backgroundColor: showBankDetails !== false ? accentColor : undefined,
+              }}>
+              <span
+                aria-hidden="true"
+                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                  showBankDetails !== false ? "translate-x-5" : "translate-x-0"
+                }`}
+              />
+            </button>
+          </div>
+        )}
+      </div>
       <div className="space-y-3">
         <FormInput
           label="Account Name"

@@ -24,6 +24,7 @@ export interface QuotationData {
   gstType?: "IGST" | "CGST_SGST";
   // Toggle to show or hide the summary totals breakdown (Subtotal, GST/Tax, Total)
   showSummaryTotals?: boolean;
+  showBankDetails?: boolean;
 
   showRateCard?: boolean;
   rateCardTitle?: string;

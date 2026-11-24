@@ -21,6 +21,8 @@ export const DEFAULT_DATA: InvoiceData = {
   currency: "INR",
   gstType: "IGST",
   durationMonths: 1,
+  showSummaryTotals: true,
+  showBankDetails: true,
   bank: COMPANY.bank,
   accountName: COMPANY.accountName,
   accountNo: COMPANY.accountNo,
