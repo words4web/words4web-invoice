@@ -131,7 +131,7 @@ export function InvoicePreviewSummary({ data }: InvoicePreviewProps) {
                       fontWeight: "bold",
                       color: "#555",
                     }}>
-                    HSN
+                    SSA
                   </td>
                   <td style={{ padding: "3px 0", color: "#000" }}>
                     {data.hsnCode}
