@@ -104,7 +104,7 @@ export function BankDetailsForm({
           onChange={(val) => onChangeField("gstNo", val)}
         />
         <FormInput
-          label="SSA"
+          label="SAC"
           placeholder="e.g. 998314"
           value={hsnCode}
           onChange={(val) => onChangeField("hsnCode", val)}

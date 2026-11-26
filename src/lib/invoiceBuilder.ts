@@ -193,7 +193,7 @@ export function buildInvoiceHtml(
         <tr><td>Account Type</td><td>${data.accountType || COMPANY.accountType}</td></tr>
         <tr><td>Bank</td><td>${data.bank || COMPANY.bank}</td></tr>
         ${data.gstNo ? `<tr><td>GST No</td><td>${data.gstNo}</td></tr>` : ""}
-        ${data.hsnCode ? `<tr><td>SSA</td><td>${data.hsnCode}</td></tr>` : ""}
+        ${data.hsnCode ? `<tr><td>SAC</td><td>${data.hsnCode}</td></tr>` : ""}
       </table>
       ${
         data.paypalId

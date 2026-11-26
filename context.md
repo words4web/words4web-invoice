@@ -325,11 +325,11 @@ From `new uk client/implementation_plan.md`:
 - [x] Updated print & PDF builders (`src/lib/invoiceBuilder.ts` and `src/lib/quotationBuilder.ts`) to conditionally render Bank Details (and Summary Totals in Invoice) with matching alignment styles.
 - [x] Verified zero TypeScript compilation errors (`pnpm tsc --noEmit`).
 
-### Phase 18: Update HSN Label to SSA (November 26, 2026) ✅
+### Phase 18: Update HSN Label to SAC (November 26, 2026) ✅
 
-- [x] Updated the field label from `HSN` to `SSA` in `BankDetailsForm.tsx`.
-- [x] Updated Bank Details summary table row label from `HSN` to `SSA` in `InvoicePreviewSummary.tsx` and `QuotationPreviewSummary.tsx`.
-- [x] Updated print & PDF builder templates in `src/lib/invoiceBuilder.ts` and `src/lib/quotationBuilder.ts` to output `SSA` instead of `HSN`.
+- [x] Updated the field label from `HSN` (via `SSA`) to `SAC` in `BankDetailsForm.tsx`.
+- [x] Updated Bank Details summary table row label to `SAC` in `InvoicePreviewSummary.tsx` and `QuotationPreviewSummary.tsx`.
+- [x] Updated print & PDF builder templates in `src/lib/invoiceBuilder.ts` and `src/lib/quotationBuilder.ts` to output `SAC`.
 - [x] Verified zero TypeScript compilation errors (`pnpm tsc --noEmit`).
 
 ---

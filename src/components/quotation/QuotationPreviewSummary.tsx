@@ -131,7 +131,7 @@ export function QuotationPreviewSummary({ data }: QuotationPreviewProps) {
                         fontWeight: "bold",
                         color: "#555",
                       }}>
-                      SSA
+                      SAC
                     </td>
                     <td style={{ padding: "3px 0", color: "#000" }}>
                       {data.hsnCode}
